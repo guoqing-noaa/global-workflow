@@ -493,7 +493,12 @@ FV3_nml(){
   echo "SUB ${FUNCNAME[0]}: Creating name lists and model configure file for FV3"
   # Call child scripts in current script directory
   source "${HOMEgfs}/ush/parsing_namelists_FV3.sh"
-  FV3_namelists
+  if [[ ${ntiles} -gt 6 ]] ; then
+      FV3_namelists global_with_nest
+      FV3_namelists nest
+  else
+      FV3_namelists global_no_nest
+  fi
   echo "SUB ${FUNCNAME[0]}: FV3 name lists and model configure file created"
 }
 

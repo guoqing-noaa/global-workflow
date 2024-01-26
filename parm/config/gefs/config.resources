@@ -302,11 +302,11 @@ elif [[ "${step}" = "fcst" || "${step}" = "efcs" ]]; then
     done
 
     case "${CASE}" in
-      "C48" | "C96" | "C192")
+      [C]48 | [CW]96 | [CW]192)
         declare -x "wtime_${step}"="03:00:00"
         declare -x "wtime_${step}_gfs"="03:00:00"
         ;;
-      "C384" | "C768" | "C1152")
+      [CW]384 | [CW]768 | [CW]1152)
         declare -x "wtime_${step}"="06:00:00"
         declare -x "wtime_${step}_gfs"="06:00:00"
         ;;
@@ -401,7 +401,9 @@ elif [[ ${step} = "ecen" ]]; then
     export npe_ecen=80
     export nth_ecen=4
     if [[ "${machine}" = "HERA" ]]; then export nth_ecen=6; fi
-    if [[ ${CASE} = "C384" || ${CASE} = "C192" || ${CASE} = "C96" || ${CASE} = "C48" ]]; then export nth_ecen=2; fi
+    if [[ ${CASE} =~ [CW]384$ || ${CASE} =~ [CW]192$ || ${CASE} =~ [CW]96$ || ${CASE} =~ [CW]48$ ]]; then
+        export nth_ecen=2
+    fi
     npe_node_ecen=$(echo "${npe_node_max} / ${nth_ecen}" | bc)
     export npe_node_ecen
     export nth_cycle=${nth_ecen}

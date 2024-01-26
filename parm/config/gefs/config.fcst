@@ -255,7 +255,7 @@ export restart_interval=${restart_interval_gfs:-12}
 export adjust_dry_mass=".false."
 
 # Write each restart file in 16 small files to save time
-if [[ "${CASE}" = C768 ]]; then
+if [[ "${CASE}" =~ [CW]768$ ]]; then
   export io_layout="4,4"
 else
   export io_layout="1,1"

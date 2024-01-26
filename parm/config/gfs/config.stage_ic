@@ -8,25 +8,25 @@ echo "BEGIN: config.stage_ic"
 source "${EXPDIR}/config.resources" stage_ic
 
 case "${CASE}" in
-  "C48" | "C96")
+  [CW]48 | [CW]96)
     export CPL_ATMIC="workflow_${CASE}_refactored"
     export CPL_ICEIC="workflow_${CASE}_refactored"
     export CPL_OCNIC="workflow_${CASE}_refactored"
     export CPL_WAVIC="workflow_${CASE}_refactored"
     ;;
-  "C384")
+  [CW]384)
     export CPL_ATMIC=GEFS-NoahMP-aerosols-p8c_refactored
     export CPL_ICEIC=CPC_refactored
     export CPL_OCNIC=CPC3Dvar_refactored
     export CPL_WAVIC=workflow_C384_refactored
     ;;
-  "C768")
+  [CW]768)
     export CPL_ATMIC=HR2_refactored
     export CPL_ICEIC=HR1_refactored
     export CPL_OCNIC=HR1_refactored
     export CPL_WAVIC=HR1_refactored
     ;;
-  "C1152")
+  [CW]1152)
     export CPL_ATMIC=HR2_C1152_refactored
     export CPL_ICEIC=HR3_refactored
     export CPL_OCNIC=HR3_refactored

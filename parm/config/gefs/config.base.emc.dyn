@@ -158,16 +158,16 @@ export OCNRES="@OCNRES@"
 export ICERES="${OCNRES}"
 # These are the currently recommended grid-combinations
 case "${CASE}" in
-    "C48")
+    [CW]48)
         export waveGRD='glo_500'
         ;;
-    "C96" | "C192")
+    [CW]96 | [CW]192)
         export waveGRD='glo_200'
         ;;
-    "C384")
+    [CW]384)
         export waveGRD='glo_025'
         ;;
-    "C768" | "C1152")
+    [CW]768 | [CW]1152)
            export waveGRD='mx025'
         ;;
     *)
