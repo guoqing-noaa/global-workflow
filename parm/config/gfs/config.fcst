@@ -47,6 +47,9 @@ export FCSTEXEC="ufs_model.x"
 export TYPE="nh"
 export MONO="non-mono"
 
+# Enable a nest in one tile of the global grid.
+export DO_NEST="NO"
+
 # Use stratosphere h2o physics
 export h2o_phys=".true."
 
@@ -260,6 +263,10 @@ if [[ "${CDUMP}" =~ "gdas" ]] ; then # GDAS cycle specific parameters
     export adjust_dry_mass=".true."
 
 elif [[ "${CDUMP}" =~ "gfs" ]] ; then # GFS cycle specific parameters
+
+    if [[ "${DO_NEST:-NO}" == YES ]] ; then
+        export ntiles_fcst=7
+    fi
 
     # Write more variables to output
     export DIAG_TABLE="${HOMEgfs}/parm/ufs/fv3/diag_table"
