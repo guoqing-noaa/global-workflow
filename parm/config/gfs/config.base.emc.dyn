@@ -198,6 +198,11 @@ case "${CASE}" in
         exit 1
         ;;
 esac
+if [[ $CASE =~ ^W ]] ; then
+    export DO_NEST="YES"
+else
+    export DO_NEST="NO"
+fi
 
 case "${APP}" in
   ATM)

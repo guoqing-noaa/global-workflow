@@ -304,12 +304,17 @@ def edit_baseconfig(host, inputs, yaml_dict):
     elif inputs.start in ["cold"]:
         is_warm_start = ".false."
 
+    if inputs.nest:
+        grid = 'W'
+    else:
+        grid = 'C'
+
     extend_dict = dict()
     extend_dict = {
         "@PSLOT@": inputs.pslot,
         "@SDATE@": datetime_to_YMDH(inputs.idate),
         "@EDATE@": datetime_to_YMDH(inputs.edate),
-        "@CASECTL@": f'C{inputs.resdetatmos}',
+        "@CASECTL@": f'{grid}{inputs.resdetatmos}',
         "@OCNRES@": f"{int(100.*inputs.resdetocean):03d}",
         "@EXPDIR@": inputs.expdir,
         "@COMROOT@": inputs.comroot,
@@ -390,6 +395,8 @@ def input_args(*argv):
                             type=str, required=False, default='test')
         parser.add_argument('--resdetatmos', help='atmosphere resolution of the deterministic model forecast',
                             type=int, required=False, default=384)
+        parser.add_argument('--nest', help='run with a high-resolution nest inside one of the global tiles',
+                            required=False, default=False, action='store_true')
         parser.add_argument('--resdetocean', help='ocean resolution of the deterministic model forecast',
                             type=float, required=False, default=0.0)  # 0.0 (or lower) means determine from resdetatmos (limited combinations will be available)
         parser.add_argument('--comroot', help='full path to COMROOT',

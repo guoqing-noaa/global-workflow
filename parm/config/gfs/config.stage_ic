@@ -38,4 +38,6 @@ case "${CASE}" in
     ;;
 esac
 
+export CPL_ATMIC=custom
+
 echo "END: config.stage_ic"

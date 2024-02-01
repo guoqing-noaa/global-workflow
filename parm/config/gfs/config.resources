@@ -571,7 +571,6 @@ elif [[ "${step}" = "fcst" || "${step}" = "efcs" ]]; then
           export layout_y_nest=${layout_y_nest:-10}
           export npx_nest=${npx_nest:-1441}
           export npy_nest=${npy_nest:-961}
-          ntasks_fv3=$(( ntasks_fv3 + layout_x_nest * layout_y_nest ))
         fi
         # PETS for the atmosphere dycore
         (( FV3PETS = ntasks_fv3 * nthreads_fv3 ))
