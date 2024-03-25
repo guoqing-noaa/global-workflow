@@ -47,7 +47,8 @@ export PACKAGEROOT="@PACKAGEROOT@"    # TODO: set via prod_envir in Ops
 export COMROOT="@COMROOT@"    # TODO: set via prod_envir in Ops
 export COMINsyn="@COMINsyn@"
 export DMPDIR="@DMPDIR@"
-export BASE_CPLIC="@BASE_CPLIC@"
+#export BASE_CPLIC="@BASE_CPLIC@"
+export BASE_CPLIC="/scratch2/BMC/wrfruc/Samuel.Trahan/westwater/ICs"
 
 # USER specific paths
 export HOMEDIR="@HOMEDIR@"
@@ -198,11 +199,6 @@ case "${CASE}" in
         exit 1
         ;;
 esac
-if [[ $CASE =~ ^W ]] ; then
-    export DO_NEST="YES"
-else
-    export DO_NEST="NO"
-fi
 
 case "${APP}" in
   ATM)
@@ -239,6 +235,19 @@ case "${APP}" in
     exit 1
     ;;
 esac
+
+if [[ "${DO_ATM:-YES}" == YES ]] ; then
+    if [[ $CASE =~ ^W ]] ; then
+        export DO_NEST="YES"
+        export ntiles=7
+    else
+        export DO_NEST="NO"
+        export ntiles=6
+    fi
+else
+    export ntiles=6
+    export DO_NEST="NO"
+fi
 
 # Surface cycle update frequency
 if [[ "${CDUMP}" =~ "gdas" ]] ; then
@@ -288,6 +297,8 @@ export QUILTING=".true."
 export OUTPUT_GRID="gaussian_grid"
 export WRITE_DOPOST=".true." # WRITE_DOPOST=true, use inline POST
 export WRITE_NSFLIP=".true."
+
+export NEST_OUTPUT_GRID="regional_latlon"
 
 # IAU related parameters
 export DOIAU="@DOIAU@"        # Enable 4DIAU for control with 3 increments

@@ -7,12 +7,15 @@ cwd=$(pwd)
 APP="S2SWA"
 CCPP_SUITES="FV3_GFS_v17_p8_ugwpv1,FV3_GFS_v17_coupled_p8_ugwpv1"  # TODO: does the g-w need to build with all these CCPP_SUITES?
 
-while getopts ":da:j:v" option; do
+ufs_model=$cwd/ufs_model.fd
+
+while getopts ":da:j:vu:" option; do
   case "${option}" in
     d) BUILD_TYPE="DEBUG";;
     a) APP="${OPTARG}";;
     j) BUILD_JOBS="${OPTARG}";;
     v) export BUILD_VERBOSE="YES";;
+    u) ufs_model="${OPTARG}";;
     :)
       echo "[${BASH_SOURCE[0]}]: ${option} requires an argument"
       ;;
@@ -22,7 +25,7 @@ while getopts ":da:j:v" option; do
   esac
 done
 
-cd "${cwd}/ufs_model.fd"
+cd "${ufs_model}"
 
 source "./tests/detect_machine.sh"
 source "./tests/module-setup.sh"
@@ -56,7 +59,8 @@ else
 
   export CMAKE_FLAGS="${MAKE_OPT}"
   BUILD_JOBS=${BUILD_JOBS:-8} ./build.sh
-  mv "${cwd}/ufs_model.fd/build/ufs_model" "${cwd}/ufs_model.fd/tests/ufs_model.x"
+
+  mv "${ufs_model}/build/ufs_model" "${ufs_model}/tests/ufs_model.x"
 fi
 
 exit 0

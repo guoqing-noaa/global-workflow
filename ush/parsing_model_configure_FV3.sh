@@ -63,5 +63,25 @@ output_fh:               ${FV3_OUTPUT_FH}
 iau_offset:              ${IAU_OFFSET:-0}
 EOF
 
+if [[ "${DO_NEST:-NO}" == YES ]] ; then
+    cat >> model_configure <<EOF
+
+# Output settings for the nest.
+<output_grid_02>
+output_grid:             ${NEST_OUTPUT_GRID}
+imo:                     ${NEST_IMO}
+jmo:                     ${NEST_JMO}
+cen_lon:                 ${target_lon}
+cen_lat:                 ${target_lat}
+lon1:                    ${NEST_LON1}
+lat1:                    ${NEST_LAT1}
+lon2:                    ${NEST_LON2}
+lat2:                    ${NEST_LAT2}
+dlon:                    ${NEST_DLON}
+dlat:                    ${NEST_DLAT}
+</output_grid_02>
+EOF
+fi
+
 echo "$(cat model_configure)"
 }

@@ -214,7 +214,12 @@ export DO_SPPT=${DO_SPPT:-"NO"}
 export DO_SKEB=${DO_SKEB:-"NO"}
 export DO_SHUM=${DO_SHUM:-"NO"}
 export DO_LAND_PERT=${DO_LAND_PERT:-"NO"}
-export DO_CA=${DO_CA:-"YES"}
+# CA does not work with nesting.
+if [[ "${DO_NEST:-NO}" == NO ]] ; then
+    export DO_CA=${DO_CA:-"YES"}
+else
+    export DO_CA=${DO_CA:-"NO"}
+fi
 
 #coupling settings
 export cplmode="ufs.frac"
@@ -237,6 +242,8 @@ export FSICS="0"
 export ideflate=1
 export nbits=14
 export ishuffle=0
+# NetCDF zstd compress. Faster than zlib. Don't enable both at the same time.
+export zstandard=-1
 # compression for RESTART files written by FMS
 export shuffle=1
 export deflate_level=1
@@ -260,10 +267,6 @@ if [[ "${CDUMP}" =~ "gdas" ]] ; then # GDAS cycle specific parameters
     export adjust_dry_mass=".true."
 
 elif [[ "${CDUMP}" =~ "gfs" ]] ; then # GFS cycle specific parameters
-
-    if [[ "${DO_NEST:-NO}" == YES ]] ; then
-        export ntiles_fcst=7
-    fi
 
     # Write more variables to output
     export DIAG_TABLE="${HOMEgfs}/parm/ufs/fv3/diag_table"

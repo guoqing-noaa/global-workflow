@@ -203,6 +203,7 @@ elif [[ "${step}" = "fcst" || "${step}" = "efcs" ]]; then
         _CDUMP_LIST=${CDUMP:-"gdas gfs"}
     elif [[ "${step}" = "efcs" ]]; then
         _CDUMP_LIST=${CDUMP:-"enkfgdas enkfgfs"}
+        ntiles=${ntiles:-${ntiles_efcs:-6}}
     fi
 
     # During workflow creation, we need resources for all CDUMPs and CDUMP is undefined

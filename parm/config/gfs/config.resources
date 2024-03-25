@@ -549,7 +549,6 @@ elif [[ "${step}" = "fcst" || "${step}" = "efcs" ]]; then
 
     if [[ "${step}" = "fcst" ]]; then
         _CDUMP_LIST=${CDUMP:-"gdas gfs"}
-        ntiles=${ntiles:-${ntiles_fcst:-6}}
     elif [[ "${step}" = "efcs" ]]; then
         _CDUMP_LIST=${CDUMP:-"enkfgdas enkfgfs"}
         ntiles=${ntiles:-${ntiles_efcs:-6}}

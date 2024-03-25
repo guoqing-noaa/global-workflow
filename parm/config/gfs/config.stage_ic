@@ -38,6 +38,6 @@ case "${CASE}" in
     ;;
 esac
 
-export CPL_ATMIC=custom
+export CPL_ATMIC=W384
 
 echo "END: config.stage_ic"

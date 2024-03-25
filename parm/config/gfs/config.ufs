@@ -116,15 +116,26 @@ case "${machine}" in
 esac
 export npe_node_max
 
+if [[ "${DO_NEST:-NO}" == YES ]] ; then
+    export grid_type=0
+    # These are for the W96, W192, etc. cases:
+    export target_lat=32.5
+    export target_lon=-135.0
+    export stretch_fac=1.0001
+    export NEST_LON1=-195.000000
+    export NEST_LAT1=-7.500000
+    export NEST_LON2=-75.000000
+    export NEST_LAT2=72.500000
+    export twowaynest=${twowaynest:-.true.}
+else
+    # No nest.
+    export grid_type=-1
+fi
+
 # (Standard) Model resolution dependent variables
 case "${fv3_res}" in
-    [CW]48)
+    C48)
         export DELTIM=1200
-        if [[ ${DO_NEST:-NO} == YES ]] ; then
-            export DELTIM=600
-            export layout_x_nest=1
-            export layout_y_nest=1
-        fi
         export layout_x=1
         export layout_y=1
         export layout_x_gfs=1
@@ -141,11 +152,6 @@ case "${fv3_res}" in
         ;;
     [CW]96)
         export DELTIM=600
-        if [[ ${DO_NEST:-NO} == YES ]] ; then
-            export DELTIM=300
-            export layout_x_nest=6
-            export layout_y_nest=5
-        fi
         export layout_x=2
         export layout_y=2
         export layout_x_gfs=2
@@ -159,12 +165,17 @@ case "${fv3_res}" in
         export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE=1
         export WRITE_GROUP_GFS=1
         export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=1
+        if [[ ${DO_NEST:-NO} == YES ]] ; then
+            export DELTIM=300
+            export layout_x_nest=6
+            export layout_y_nest=5
+            export nest_refine=4
+            export nest_ioffset=4
+            export nest_joffset=9
+        fi
         ;;
     [CW]192)
         export DELTIM=450
-        if [[ ${DO_NEST:-NO} == YES ]] ; then
-            export DELTIM=300
-        fi
         export layout_x=4
         export layout_y=6
         export layout_x_gfs=4
@@ -178,16 +189,17 @@ case "${fv3_res}" in
         export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE=10
         export WRITE_GROUP_GFS=2
         export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=5
-        export layout_x_nest=15
-        export layout_y_nest=12
+        if [[ ${DO_NEST:-NO} == YES ]] ; then
+            export DELTIM=225
+            export layout_x_nest=15
+            export layout_y_nest=12
+            export nest_refine=4
+            export nest_ioffset=7
+            export nest_joffset=19
+        fi
         ;;
     [CW]384)
         export DELTIM=300
-        if [[ ${DO_NEST:-NO} == YES ]] ; then
-            export DELTIM=150
-            export layout_x_nest=24
-            export layout_y_nest=20
-        fi
         export layout_x=8
         export layout_y=8
         export layout_x_gfs=8
@@ -201,14 +213,25 @@ case "${fv3_res}" in
         export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE=10
         export WRITE_GROUP_GFS=4
         export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=10
+        if [[ ${DO_NEST:-NO} == YES ]] ; then
+            export DELTIM=150
+            export layout_x_nest=33
+            export layout_y_nest=32
+            export nest_refine=4
+            export nest_ioffset=13
+            export nest_joffset=37
+            export NEST_IMO=1921
+            export NEST_JMO=1281
+            export NEST_DLON=0.0625
+            export NEST_DLAT=0.0625
+            export WRITE_GROUP=2
+            export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE=20
+            export WRITE_GROUP_GFS=2
+            export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=20
+        fi
         ;;
     [CW]768)
         export DELTIM=150
-        if [[ ${DO_NEST:-NO} == YES ]] ; then
-            export DELTIM=90
-            export layout_x_nest=30
-            export layout_y_nest=24
-        fi
         export layout_x=8
         export layout_y=12
         export layout_x_gfs=12
@@ -222,14 +245,17 @@ case "${fv3_res}" in
         export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE=10
         export WRITE_GROUP_GFS=4
         export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=20 #Note this should be 10 for WCOSS2
-        ;;
-    [CW]1152)
-        export DELTIM=120
         if [[ ${DO_NEST:-NO} == YES ]] ; then
-            export DELTIM=90
-            export layout_x_nest=36
-            export layout_y_nest=25
+            export DELTIM=75
+            export layout_x_nest=30
+            export layout_y_nest=24
+            export nest_refine=4
+            export nest_ioffset=25
+            export nest_joffset=72
         fi
+        ;;
+    C1152)
+        export DELTIM=120
         export layout_x=8
         export layout_y=16
         export layout_x_gfs=8
@@ -244,13 +270,8 @@ case "${fv3_res}" in
         export WRITE_GROUP_GFS=4
         export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=20  # TODO: refine these numbers when a case is available
         ;;
-    [CW]3072)
+    C3072)
         export DELTIM=90
-        if [[ ${DO_NEST:-NO} == YES ]] ; then
-            export DELTIM=60
-            export layout_x_nest=72
-            export layout_y_nest=50
-        fi
         export layout_x=16
         export layout_y=32
         export layout_x_gfs=16

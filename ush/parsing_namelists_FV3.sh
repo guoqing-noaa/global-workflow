@@ -20,8 +20,10 @@ namelist_mode="${1:-global_no_nest}"
 
 if [[ ${namelist_mode} == nest ]] ; then
     input_nml=input_nest02.nml
+    only_input_nml="YES"
 else
     input_nml=input.nml
+    only_input_nml="NO"
 fi
 
 # setup the tables
@@ -33,6 +35,7 @@ FIELD_TABLE=${FIELD_TABLE:-${HOMEgfs}/parm/ufs/fv3/field_table}
 # ensure non-prognostic tracers are set
 dnats=${dnats:-0}
 
+if [[ "${only_input_nml:-NO}" == "NO" ]] ; then
 # build the diag_table
 {
 echo "UFS_Weather_Model_Forecast"
@@ -47,7 +50,6 @@ if [[ -n "${AERO_DIAG_TABLE:-}" ]]; then
 fi
 cat "${DIAG_TABLE_APPEND}"
 } >> diag_table
-
 
 # copy data table
 ${NCP} "${DATA_TABLE}" data_table
@@ -71,6 +73,7 @@ if [[ -n "${AERO_FIELD_TABLE:-}" ]]; then
 else
   ${NCP} "${FIELD_TABLE}" field_table
 fi
+fi # only_input_nml
 
 if [[ ${namelist_mode} =~ global ]] ; then
     layout_x_here=${layout_x}
@@ -78,6 +81,7 @@ if [[ ${namelist_mode} =~ global ]] ; then
     ntiles_here=6
     npx_here=${npx}
     npy_here=${npy}
+    k_split_here=${k_split}
 else
     layout_x_here=${layout_x_nest}
     layout_y_here=${layout_y_nest}
@@ -87,6 +91,7 @@ else
     nestupdate_here=${nestupdate:-7}
     npx_here=${npx_nest}
     npy_here=${npy_nest}
+    k_split_here=${k_split_nest}
 fi
 
 cat > "$input_nml" <<EOF
@@ -127,7 +132,7 @@ cat > "$input_nml" <<EOF
   npz = ${npz}
   dz_min =  ${dz_min:-"6"}
   psm_bc = ${psm_bc:-"0"}
-  grid_type = -1
+  grid_type = ${grid_type:--1}
   make_nh = ${make_nh}
   fv_debug = ${fv_debug:-".false."}
   range_warn = ${range_warn:-".true."}
@@ -149,7 +154,7 @@ cat > "$input_nml" <<EOF
   beta = 0.
   a_imp = 1.
   p_fac = 0.1
-  k_split = ${k_split}
+  k_split = ${k_split_here}
   n_split = ${n_split}
   nwat = ${nwat:-2}
   na_init = ${na_init}
@@ -192,6 +197,26 @@ cat > "$input_nml" <<EOF
   read_increment = ${read_increment}
   res_latlon_dynamics = ${res_latlon_dynamics}
   ${fv_core_nml-}
+EOF
+
+if [[ "${DO_NEST:-NO}" == YES && ${namelist_mode} =~ global ]] ; then
+  cat >> "$input_nml" <<EOF
+  do_schmidt = .true.
+  target_lat = ${target_lat}
+  target_lon = ${target_lon}
+  stretch_fac = ${stretch_fac}
+EOF
+fi
+
+if [[ "${DO_NEST:-NO}" == YES && ${namelist_mode} == nest ]] ; then
+  cat >> "$input_nml" <<EOF
+  nested = .true.
+  twowaynest = ${twowaynest:-.true.} ! .true.
+  nestupdate = 7
+EOF
+fi
+
+cat >> "$input_nml" <<EOF
 /
 
 &external_ic_nml
@@ -459,7 +484,7 @@ EOF
 if [[ ${namelist_mode} == "global_with_nest" ]] ; then
   cat >> "$input_nml" << EOF
 &fv_nest_nml
-  grid_pes = $(( layout_x * layout_y )),$(( nest_layout_x * nest_layout_y ))
+  grid_pes = $(( layout_x * layout_y * 6 )),$(( layout_x_nest * layout_y_nest ))
   tile_coarse = 0,6
   num_tile_top = 6
   p_split = 1
@@ -622,7 +647,14 @@ cat >> "$input_nml" <<EOF
 /
 
 &fv_grid_nml
+EOF
+if [[ "${DO_NEST:-NO}" == NO ]] ; then
+    cat >> "$input_nml" <<EOF
   grid_file = 'INPUT/grid_spec.nc'
+EOF
+fi
+
+cat >> "$input_nml" <<EOF
   ${fv_grid_nml:-}
 /
 EOF
