@@ -14,6 +14,9 @@ case "${CASE}" in
     export CPL_OCNIC="workflow_${CASE}_refactored"
     export CPL_WAVIC="workflow_${CASE}_refactored"
     ;;
+  W192)
+    : # The "if" statement below will set the variable.
+    ;;
   [CW]384)
     export CPL_ATMIC=GEFS-NoahMP-aerosols-p8c_refactored
     export CPL_ICEIC=CPC_refactored
@@ -38,6 +41,8 @@ case "${CASE}" in
     ;;
 esac
 
-export CPL_ATMIC=W384
+if [[ ${CASE} =~ W.* ]] ; then
+    export CPL_ATMIC=HAFS_AR_${CASE}
+fi
 
 echo "END: config.stage_ic"

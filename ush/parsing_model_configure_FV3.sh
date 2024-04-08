@@ -69,8 +69,8 @@ if [[ "${DO_NEST:-NO}" == YES ]] ; then
 # Output settings for the nest.
 <output_grid_02>
 output_grid:             ${NEST_OUTPUT_GRID}
-imo:                     ${NEST_IMO}
-jmo:                     ${NEST_JMO}
+imo:                     ${npx_nest}
+jmo:                     ${npy_nest}
 cen_lon:                 ${target_lon}
 cen_lat:                 ${target_lat}
 lon1:                    ${NEST_LON1}

@@ -166,12 +166,22 @@ case "${fv3_res}" in
         export WRITE_GROUP_GFS=1
         export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=1
         if [[ ${DO_NEST:-NO} == YES ]] ; then
-            export DELTIM=300
-            export layout_x_nest=6
-            export layout_y_nest=5
+            export DELTIM=450
+            export layout_x_gfs=4
+            export layout_y_gfs=4
+            export layout_x_nest=12
+            export layout_y_nest=10
             export nest_refine=4
             export nest_ioffset=4
             export nest_joffset=9
+            export npx_nest=361
+            export npy_nest=241
+            export NEST_DLON=0.25
+            export NEST_DLAT=0.25
+            export WRITE_GROUP=2
+            export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE=2
+            export WRITE_GROUP_GFS=2
+            export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=2
         fi
         ;;
     [CW]192)
@@ -191,11 +201,21 @@ case "${fv3_res}" in
         export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=5
         if [[ ${DO_NEST:-NO} == YES ]] ; then
             export DELTIM=225
+            export layout_x_gfs=5
+            export layout_y_gfs=6
             export layout_x_nest=15
-            export layout_y_nest=12
+            export layout_y_nest=25
             export nest_refine=4
             export nest_ioffset=7
             export nest_joffset=19
+            export npx_nest=721
+            export npy_nest=481
+            export NEST_DLON=0.125
+            export NEST_DLAT=0.125
+            export WRITE_GROUP=2
+            export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE=15
+            export WRITE_GROUP_GFS=2
+            export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=15
         fi
         ;;
     [CW]384)
@@ -220,8 +240,8 @@ case "${fv3_res}" in
             export nest_refine=4
             export nest_ioffset=13
             export nest_joffset=37
-            export NEST_IMO=1921
-            export NEST_JMO=1281
+            export npx_nest=1921
+            export npy_nest=1281
             export NEST_DLON=0.0625
             export NEST_DLAT=0.0625
             export WRITE_GROUP=2
@@ -247,11 +267,25 @@ case "${fv3_res}" in
         export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=20 #Note this should be 10 for WCOSS2
         if [[ ${DO_NEST:-NO} == YES ]] ; then
             export DELTIM=75
-            export layout_x_nest=30
-            export layout_y_nest=24
+            export layout_x=16
+            export layout_y=10
+            export layout_x_gfs=16
+            export layout_y_gfs=10
+            export layout_x_nest=48
+            export layout_y_nest=45
+            export nthreads_fv3=2
+            export nthreads_fv3_gfs=2
             export nest_refine=4
-            export nest_ioffset=25
+            export nest_ioffset=24
             export nest_joffset=72
+            export npx_nest=2881
+            export npy_nest=1921
+            export NEST_DLON=0.0325
+            export NEST_DLAT=0.0325
+            export WRITE_GROUP=2
+            export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE=90
+            export WRITE_GROUP_GFS=2
+            export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=90
         fi
         ;;
     C1152)
