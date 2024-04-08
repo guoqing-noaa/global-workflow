@@ -147,8 +147,10 @@ EOF
     ${NLN} "${FIXorog}/${CASE}/${CASE}_grid.tile${n}.nc"     "${DATA}/INPUT/${CCASE}_grid.tile${n}.nc"
   done
   if (( ntiles > 6 )) ; then
+    n=7
     ${NLN} "${FIXorog}/${CASE}/${CASE}.mx${OCNRES}_oro_data.tile${n}.nc" "${DATA}/INPUT/oro_data.nest02.tile${n}.nc"
     ${NLN} "${FIXorog}/${CASE}/${CASE}_grid.tile${n}.nc"     "${DATA}/INPUT/${CCASE}_grid.nest02.tile${n}.nc"
+    ${NLN} "${FIXorog}/${CASE}/${CASE}_grid.tile${n}.nc"     "${DATA}/INPUT/grid.nest02.tile${n}.nc"
   fi
 
   _suite_file="${HOMEgfs}/sorc/ufs_model.fd/FV3/ccpp/suites/suite_${CCPP_SUITE}.xml"

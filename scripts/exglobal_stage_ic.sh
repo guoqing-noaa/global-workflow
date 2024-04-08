@@ -67,16 +67,16 @@ for MEMDIR in "${MEMDIR_ARRAY[@]}"; do
     err=$((err + rc))
     for ftype in gfs_data sfc_data; do
       for ((tt = 1; tt <= ntiles; tt++)); do
-        src="${BASE_CPLIC}/${CPL_ATMIC:-}/${PDY}${cyc}/${MEMDIR}/atmos/${ftype}.tile${tt}.nc"
-        if (( tt > 6 )) ; then
-            tgt="${COM_ATMOS_INPUT}/${ftype}.nest0$((tt-5)).tile${tt}.nc"
-        else
-            tgt="${COM_ATMOS_INPUT}/${ftype}.tile${tt}.nc"
-        fi
-        ${NCP} "${src}" "${tgt}"
-        rc=$?
-        ((rc != 0)) && error_message "${src}" "${tgt}" "${rc}"
-        err=$((err + rc))
+        for tgt in "${COM_ATMOS_INPUT}/${ftype}.tile${tt}.nc" "${COM_ATMOS_INPUT}/${ftype}.nest0$((tt-5)).tile${tt}.nc" ; do
+          src="${BASE_CPLIC}/${CPL_ATMIC:-}/${PDY}${cyc}/${MEMDIR}/atmos/${ftype}.tile${tt}.nc"
+          ${NCP} "${src}" "${tgt}"
+          rc=$?
+          ((rc != 0)) && error_message "${src}" "${tgt}" "${rc}"
+          err=$((err + rc))
+          if (( tt <= 6 )) ; then
+            break
+          fi
+        done
       done
     done
   fi
