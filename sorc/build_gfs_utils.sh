@@ -41,6 +41,8 @@ while getopts ":j:dvh" option; do
 done
 shift $((OPTIND-1))
 
+sed -i 's,envs/gsi-addon/install,envs/gsi-addon-env-rocky8/install,g' gfs_utils.fd/modulefiles/gfsutils_hera.intel.lua
+
 BUILD_TYPE=${BUILD_TYPE:-"Release"} \
 BUILD_VERBOSE=${BUILD_VERBOSE:-"NO"} \
 BUILD_JOBS=${BUILD_JOBS:-8} \
