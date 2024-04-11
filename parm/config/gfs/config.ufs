@@ -235,13 +235,17 @@ case "${fv3_res}" in
         export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=10
         if [[ ${DO_NEST:-NO} == YES ]] ; then
             export DELTIM=150
-            export layout_x_nest=33
-            export layout_y_nest=32
+            export layout_x=8
+            export layout_y=8
+            export layout_x_gfs=8
+            export layout_y_gfs=8
+            export layout_x_nest=34
+            export layout_y_nest=24
             export nest_refine=4
             export nest_ioffset=13
             export nest_joffset=37
-            export npx_nest=1921
-            export npy_nest=1281
+            export npx_nest=1441
+            export npy_nest=961
             export NEST_DLON=0.0625
             export NEST_DLAT=0.0625
             export WRITE_GROUP=2
