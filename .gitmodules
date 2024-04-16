@@ -1,7 +1,7 @@
 [submodule "sorc/ufs_model.fd"]
 	path = sorc/ufs_model.fd
-	url = https://github.com/SamuelTrahanNOAA/ufs-weather-model
-        branch = nesting-fixes
+	url = https://github.com/ufs-community/ufs-weather-model
+        branch = develop
 	ignore = dirty
 [submodule "sorc/wxflow"]
 	path = sorc/wxflow
