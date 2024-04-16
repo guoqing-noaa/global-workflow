@@ -9,6 +9,8 @@ CCPP_SUITES="FV3_GFS_v17_p8_ugwpv1,FV3_GFS_v17_coupled_p8_ugwpv1"  # TODO: does 
 
 ufs_model=$cwd/ufs_model.fd
 
+faster=NO # YES sends -DFASTER=ON to cmake
+
 while getopts ":da:j:vu:" option; do
   case "${option}" in
     d) BUILD_TYPE="DEBUG";;
@@ -16,6 +18,7 @@ while getopts ":da:j:vu:" option; do
     j) BUILD_JOBS="${OPTARG}";;
     v) export BUILD_VERBOSE="YES";;
     u) ufs_model="${OPTARG}";;
+    f) faster=YES ;;
     :)
       echo "[${BASH_SOURCE[0]}]: ${option} requires an argument"
       ;;
@@ -31,7 +34,11 @@ source "./tests/detect_machine.sh"
 source "./tests/module-setup.sh"
 
 MAKE_OPT="-DAPP=${APP} -D32BIT=ON -DCCPP_SUITES=${CCPP_SUITES}"
-[[ ${BUILD_TYPE:-"Release"} = "DEBUG" ]] && MAKE_OPT+=" -DDEBUG=ON"
+if [[ ${BUILD_TYPE:-"Release"} = "DEBUG" ]] ; then
+    MAKE_OPT+=" -DDEBUG=ON"
+elif [[ "${faster:-NO}" == YES ]] ; then
+    MAKE_OPT+=" -DFASTER=ON"
+fi
 COMPILE_NR=0
 CLEAN_BEFORE=YES
 CLEAN_AFTER=NO
