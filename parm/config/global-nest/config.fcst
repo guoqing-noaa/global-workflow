@@ -118,7 +118,7 @@ fi
 
 # PBL/turbulance schemes
 export hybedmf=".false."
-export satmedmf=".true."
+export satmedmf=".false."
 export isatmedmf=1
 tbf=""
 if [[ "${satmedmf}" == ".true." ]]; then tbf="_satmedmf" ; fi
@@ -166,13 +166,13 @@ case ${imp_physics} in
         ;;
     8)  # Thompson
         export ncld=2
-        export FIELD_TABLE="${HOMEgfs}/parm/ufs/fv3/field_table_thompson_noaero_tke${tbp}"
+        export FIELD_TABLE="${HOMEgfs}/parm/ufs/fv3/field_table_thompson_aero_tke${tbp}"
         export nwat=6
 
         export cal_pre=".false."
         export random_clds=".false."
         export effr_in=".true."
-        export ltaerosol=".false."
+        export ltaerosol=".true."
         export lradar=".true."
         export ttendlim="-999"
         export dt_inner=$((DELTIM/2))
@@ -186,6 +186,16 @@ case ${imp_physics} in
         export nord=2
         export dddmp=0.1
         export d4_bg=0.12
+
+        export lcnorm=".true."
+        export do_mynnedmf=".true."
+        export do_mynnsfclay=".true."
+        export imfshalcnv=5
+        export imfdeepcnv=5
+        export betascu=0.5
+        export betamcu=1.5
+        export betadcu=8.0
+
         ;;
     11) # GFDL
         export ncld=5
