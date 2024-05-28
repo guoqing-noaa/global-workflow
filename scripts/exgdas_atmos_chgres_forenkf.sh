@@ -61,6 +61,8 @@ SIGLEVEL=${SIGLEVEL:-${FIXgfs}/am/global_hyblev.l${LEVS}.txt}
 APREFIX=${APREFIX:-""}
 APREFIX_ENS=${APREFIX_ENS:-""}
 # at full resolution
+ATMF01=${ATMF01:-${COM_ATMOS_HISTORY}/${APREFIX}atmf001.nc}
+ATMF02=${ATMF02:-${COM_ATMOS_HISTORY}/${APREFIX}atmf002.nc}
 ATMF03=${ATMF03:-${COM_ATMOS_HISTORY}/${APREFIX}atmf003.nc}
 ATMF04=${ATMF04:-${COM_ATMOS_HISTORY}/${APREFIX}atmf004.nc}
 ATMF05=${ATMF05:-${COM_ATMOS_HISTORY}/${APREFIX}atmf005.nc}
@@ -69,6 +71,8 @@ ATMF07=${ATMF07:-${COM_ATMOS_HISTORY}/${APREFIX}atmf007.nc}
 ATMF08=${ATMF08:-${COM_ATMOS_HISTORY}/${APREFIX}atmf008.nc}
 ATMF09=${ATMF09:-${COM_ATMOS_HISTORY}/${APREFIX}atmf009.nc}
 # at ensemble resolution
+ATMF01ENS=${ATMF01ENS:-${COM_ATMOS_HISTORY}/${APREFIX}atmf001.ensres.nc}
+ATMF02ENS=${ATMF02ENS:-${COM_ATMOS_HISTORY}/${APREFIX}atmf002.ensres.nc}
 ATMF03ENS=${ATMF03ENS:-${COM_ATMOS_HISTORY}/${APREFIX}atmf003.ensres.nc}
 ATMF04ENS=${ATMF04ENS:-${COM_ATMOS_HISTORY}/${APREFIX}atmf004.ensres.nc}
 ATMF05ENS=${ATMF05ENS:-${COM_ATMOS_HISTORY}/${APREFIX}atmf005.ensres.nc}
@@ -76,7 +80,7 @@ ATMF06ENS=${ATMF06ENS:-${COM_ATMOS_HISTORY}/${APREFIX}atmf006.ensres.nc}
 ATMF07ENS=${ATMF07ENS:-${COM_ATMOS_HISTORY}/${APREFIX}atmf007.ensres.nc}
 ATMF08ENS=${ATMF08ENS:-${COM_ATMOS_HISTORY}/${APREFIX}atmf008.ensres.nc}
 ATMF09ENS=${ATMF09ENS:-${COM_ATMOS_HISTORY}/${APREFIX}atmf009.ensres.nc}
-ATMFCST_ENSRES=${ATMFCST_ENSRES:-${COM_ATMOS_HISTORY_MEM}/${APREFIX_ENS}atmf006.nc}
+ATMFCST_ENSRES=${ATMFCST_ENSRES:-${COM_ATMOS_HISTORY_MEM}/${APREFIX_ENS}atmf$(printf %03d $assim_freq).nc}
 
 # Set script / GSI control parameters
 DOHYBVAR=${DOHYBVAR:-"NO"}
@@ -107,10 +111,16 @@ LEVS_ENKF=${LEVS_ENKF:-$($NCLEN $ATMFCST_ENSRES pfull)} # get LATB_ENFK
 ##############################################################
 # If analysis increment is written by GSI, regrid forecasts to increment resolution
 if [ $DO_CALC_ANALYSIS == "YES" ]; then
-   $NLN $ATMF06 fcst.06
-   $NLN $ATMF06ENS fcst.ensres.06
+   ATMFCST="ATMF0${assim_freq}"
+   ATMFCSTENS="ATMF0${assim_freq}ENS"
+   $NLN ${!ATMFCST} fcst.0${assim_freq} 
+   $NLN ${!ATMFCSTENS} fcst.ensres.0${assim_freq}
    $NLN $ATMFCST_ENSRES atmens_fcst
    if [ $DOHYBVAR = "YES" -a $l4densvar = ".true." -a $lwrite4danl = ".true." ]; then
+      $NLN $ATMF01     fcst.01
+      $NLN $ATMF01ENS  fcst.ensres.01
+      $NLN $ATMF02     fcst.02
+      $NLN $ATMF02ENS  fcst.ensres.02
       $NLN $ATMF03     fcst.03
       $NLN $ATMF03ENS  fcst.ensres.03
       $NLN $ATMF04     fcst.04
