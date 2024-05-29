@@ -510,12 +510,14 @@ case "${assim_freq}" in
   "1")
     nhr_assimilation=1
     min_offset=0
+    ens_nstarthr=1
     ${NLN} ${ATMGES} sigf01
     ${NLN} ${SFCGES} sfcf01
     ;;
   "2")
     nhr_assimilation=2
     min_offset=60
+    ens_nstarthr=1
     ${NLN} ${ATMG01} sigf01
     ${NLN} ${ATMGES} sigf02
     ${NLN} ${ATMG03} sigf03
@@ -526,6 +528,7 @@ case "${assim_freq}" in
   "3")
     nhr_assimilation=3
     min_offset=60
+    ens_nstarthr=2
     ${NLN} ${ATMG01} sigf02
     ${NLN} ${ATMGES} sigf03
     ${NLN} ${ATMG03} sigf04
@@ -735,7 +738,7 @@ cat > gsiparm.anl << EOF
   niter_no_qc(1)=50,niter_no_qc(2)=0,
   write_diag(1)=.true.,write_diag(2)=.false.,write_diag(3)=.true.,
   qoption=2,
-  nhr_assimilation=${nhr_assimilation}, min_offset=${min_offset},
+  nhr_assimilation=${nhr_assimilation}, min_offset=${min_offset}, ens_nstarthr=${ens_nstarthr},
   gencode=${IGEN:-0},deltim=${DELTIM},
   factqmin=0.5,factqmax=0.0002,
   iguess=-1,
