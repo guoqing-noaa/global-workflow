@@ -42,7 +42,7 @@ MEMDIR="ensstat" RUN=${GDUMP_ENS} YMD=${gPDY} HH=${gcyc} declare_from_tmpl -rx \
     COM_ATMOS_HISTORY_PREV:COM_ATMOS_HISTORY_TMPL
 
 
-export ATMGES_ENSMEAN="${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf006.ensmean.nc"
+export ATMGES_ENSMEAN="${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf00${assim_freq}.ensmean.nc"
 if [ ! -f ${ATMGES_ENSMEAN} ]; then
     echo "FATAL ERROR: FILE MISSING: ATMGES_ENSMEAN = ${ATMGES_ENSMEAN}"
     exit 1
