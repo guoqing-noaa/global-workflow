@@ -42,7 +42,7 @@ MEMDIR='ensstat' RUN=${GDUMP_ENS} YMD=${gPDY} HH=${gcyc} declare_from_tmpl -rx \
 
 mkdir -m 775 -p "${COM_ATMOS_ANALYSIS}"
 
-export ATMGES="${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf006.nc"
+export ATMGES="${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf00${assim_freq}.nc"
 if [ ! -f ${ATMGES} ]; then
     echo "FATAL ERROR: FILE MISSING: ATMGES = ${ATMGES}"
     exit 1
@@ -55,7 +55,7 @@ status=$?
 
 
 if [ ${DOHYBVAR} = "YES" ]; then
-    export ATMGES_ENSMEAN="${COM_ATMOS_HISTORY_ENS_PREV}/${GPREFIX_ENS}atmf006.ensmean.nc"
+    export ATMGES_ENSMEAN="${COM_ATMOS_HISTORY_ENS_PREV}/${GPREFIX_ENS}atmf00${assim_freq}.ensmean.nc"
     if [ ! -f ${ATMGES_ENSMEAN} ]; then
         echo "FATAL ERROR: FILE MISSING: ATMGES_ENSMEAN = ${ATMGES_ENSMEAN}"
         exit 2
