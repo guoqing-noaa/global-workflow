@@ -737,7 +737,7 @@ cat > gsiparm.anl << EOF
   niter(1)=100,niter(2)=100,
   niter_no_qc(1)=50,niter_no_qc(2)=0,
   write_diag(1)=.true.,write_diag(2)=.false.,write_diag(3)=.true.,
-  qoption=2,
+  qoption=2,offtime_data = .true.,
   nhr_assimilation=${nhr_assimilation}, min_offset=${min_offset}, ens_nstarthr=${ens_nstarthr},
   gencode=${IGEN:-0},deltim=${DELTIM},
   factqmin=0.5,factqmax=0.0002,
