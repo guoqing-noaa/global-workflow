@@ -506,23 +506,55 @@ ${NLN} ${GRADSTAT} radstat.gdas
 
 ##############################################################
 # Required model guess files
-${NLN} ${ATMG03} sigf03
-${NLN} ${ATMGES} sigf06
-${NLN} ${ATMG09} sigf09
-
-${NLN} ${SFCG03} sfcf03
-${NLN} ${SFCGES} sfcf06
-${NLN} ${SFCG09} sfcf09
-
-[[ -f ${ATMG04} ]] && ${NLN} ${ATMG04} sigf04
-[[ -f ${ATMG05} ]] && ${NLN} ${ATMG05} sigf05
-[[ -f ${ATMG07} ]] && ${NLN} ${ATMG07} sigf07
-[[ -f ${ATMG08} ]] && ${NLN} ${ATMG08} sigf08
-
-[[ -f ${SFCG04} ]] && ${NLN} ${SFCG04} sfcf04
-[[ -f ${SFCG05} ]] && ${NLN} ${SFCG05} sfcf05
-[[ -f ${SFCG07} ]] && ${NLN} ${SFCG07} sfcf07
-[[ -f ${SFCG08} ]] && ${NLN} ${SFCG08} sfcf08
+case "${assim_freq}" in
+  "1")
+    nhr_assimilation=1
+    min_offset=0
+    ${NLN} ${ATMGES} sigf01
+    ${NLN} ${SFCGES} sfcf01
+    ;;
+  "2")
+    nhr_assimilation=2
+    min_offset=60
+    ${NLN} ${ATMG01} sigf01
+    ${NLN} ${ATMGES} sigf02
+    ${NLN} ${ATMG03} sigf03
+    ${NLN} ${SFCG01} sfcf01
+    ${NLN} ${SFCGES} sfcf02
+    ${NLN} ${SFCG03} sfcf03
+    ;;
+  "3")
+    nhr_assimilation=3
+    min_offset=60
+    ${NLN} ${ATMG01} sigf02
+    ${NLN} ${ATMGES} sigf03
+    ${NLN} ${ATMG03} sigf04
+    ${NLN} ${SFCG01} sfcf02
+    ${NLN} ${SFCGES} sfcf03
+    ${NLN} ${SFCG03} sfcf04
+    ;;
+  "6")
+    nhr_assimilation=6
+    min_offset=180
+    ${NLN} ${ATMG03} sigf03
+    ${NLN} ${ATMGES} sigf06
+    ${NLN} ${ATMG09} sigf09
+    ${NLN} ${SFCG03} sfcf03
+    ${NLN} ${SFCGES} sfcf06
+    ${NLN} ${SFCG09} sfcf09
+    [[ -f ${ATMG04} ]] && ${NLN} ${ATMG04} sigf04
+    [[ -f ${ATMG05} ]] && ${NLN} ${ATMG05} sigf05
+    [[ -f ${ATMG07} ]] && ${NLN} ${ATMG07} sigf07
+    [[ -f ${ATMG08} ]] && ${NLN} ${ATMG08} sigf08
+    [[ -f ${SFCG04} ]] && ${NLN} ${SFCG04} sfcf04
+    [[ -f ${SFCG05} ]] && ${NLN} ${SFCG05} sfcf05
+    [[ -f ${SFCG07} ]] && ${NLN} ${SFCG07} sfcf07
+    [[ -f ${SFCG08} ]] && ${NLN} ${SFCG08} sfcf08
+    ;;
+   *)
+    echo "not supported assim_freq: ${assim_freq}" && exit 1
+    ;;
+esac
 
 if [ ${DOHYBVAR} = "YES" ]; then
 
@@ -703,6 +735,7 @@ cat > gsiparm.anl << EOF
   niter_no_qc(1)=50,niter_no_qc(2)=0,
   write_diag(1)=.true.,write_diag(2)=.false.,write_diag(3)=.true.,
   qoption=2,
+  nhr_assimilation=${nhr_assimilation}, min_offset=${min_offset},
   gencode=${IGEN:-0},deltim=${DELTIM},
   factqmin=0.5,factqmax=0.0002,
   iguess=-1,
