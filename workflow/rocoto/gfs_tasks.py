@@ -101,7 +101,7 @@ class GFSTasks(Tasks):
         deps = []
         dep_dict = {'type': 'metatask', 'name': 'gdasatmos_prod', 'offset': f"-{timedelta_to_HMS(self._base['cycle_interval'])}"}
         deps.append(rocoto.add_dependency(dep_dict))
-        data = f'{atm_hist_path}/gdas.t@Hz.atmf009.nc'
+        data = f"{atm_hist_path}/gdas.t@Hz.atmf00{self._base['IAU_FHREND']}.nc"
         dep_dict = {'type': 'data', 'data': data, 'offset': f"-{timedelta_to_HMS(self._base['cycle_interval'])}"}
         deps.append(rocoto.add_dependency(dep_dict))
         data = f'{dump_path}/{self.cdump}.t@Hz.updated.status.tm00.bufr_d'
