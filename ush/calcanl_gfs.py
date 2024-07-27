@@ -33,9 +33,9 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
                 if not os.path.exists(CalcAnlDir):
                     gsi_utils.make_dir(CalcAnlDir)
                 gsi_utils.copy_file(ExecAnl, CalcAnlDir + '/calc_anl.x')
-                gsi_utils.link_file(RunDir + '/siginc.nc', CalcAnlDir + '/siginc.nc.06')
-                gsi_utils.link_file(RunDir + '/sigf06', CalcAnlDir + '/ges.06')
-                gsi_utils.link_file(RunDir + '/siganl', CalcAnlDir + '/anl.06')
+                gsi_utils.link_file(RunDir + '/siginc.nc', CalcAnlDir + '/siginc.nc.01')
+                gsi_utils.link_file(RunDir + '/sigf06', CalcAnlDir + '/ges.01')
+                gsi_utils.link_file(RunDir + '/siganl', CalcAnlDir + '/anl.01')
                 gsi_utils.copy_file(ExecChgresInc, CalcAnlDir + '/chgres_inc.x')
                 # for ensemble res analysis
                 if Cdump in ["gdas", "gfs"]:
@@ -89,9 +89,9 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
         if not os.path.exists(CalcAnlDir):
             gsi_utils.make_dir(CalcAnlDir)
         gsi_utils.copy_file(ExecAnl, CalcAnlDir + '/calc_anl.x')
-        gsi_utils.link_file(RunDir + '/siginc.nc', CalcAnlDir + '/siginc.nc.06')
-        gsi_utils.link_file(RunDir + '/sigf06', CalcAnlDir + '/ges.06')
-        gsi_utils.link_file(RunDir + '/siganl', CalcAnlDir + '/anl.06')
+        gsi_utils.link_file(RunDir + '/siginc.nc', CalcAnlDir + '/siginc.nc.01')
+        gsi_utils.link_file(RunDir + '/sigf06', CalcAnlDir + '/ges.01')
+        gsi_utils.link_file(RunDir + '/siganl', CalcAnlDir + '/anl.01')
         gsi_utils.copy_file(ExecChgresInc, CalcAnlDir + '/chgres_inc.x')
         # for ensemble res analysis
         CalcAnlDir = RunDir + '/calcanl_ensres_' + format(6, '02')
@@ -273,8 +273,8 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
     namelist["setup"] = {"datapath": "'./'",
                          "analysis_filename": "'anl'",
                          "firstguess_filename": "'ges'",
-                         "increment_filename": "'inc.fullres'",
-                         "fhr": 6,
+                         "increment_filename": "'siginc.nc'",
+                         "fhr": 1,
                          "jedi": python2fortran_bool[JEDI],
                          }
 
@@ -283,8 +283,8 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
     # run the executable
     if ihost >= nhosts - 1:
         ihost = 0
-    if launcher == 'srun':
-        del os.environ['SLURM_HOSTFILE']
+#   if launcher == 'srun':
+#       del os.environ['SLURM_HOSTFILE']
     print('fullres_calc_anl', namelist)
     fullres_anl_job = subprocess.Popen(ExecCMDMPILevs_nohost + ' ' + CalcAnlDir6 + '/calc_anl.x', shell=True, cwd=CalcAnlDir6)
     print(ExecCMDMPILevs_nohost + ' ' + CalcAnlDir6 + '/calc_anl.x submitted')
