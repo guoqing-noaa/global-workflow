@@ -94,7 +94,8 @@ GSI_SOILANAL=${GSI_SOILANAL:-"NO"}
 
 ################################################################################
 
-ATMGES_ENSMEAN="${COM_ATMOS_HISTORY_STAT_PREV}/${GPREFIX}atmf006.ensmean.nc"
+#ATMGES_ENSMEAN="${COM_ATMOS_HISTORY_STAT_PREV}/${GPREFIX}atmf006.ensmean.nc"
+ATMGES_ENSMEAN="${COM_ATMOS_HISTORY_STAT_PREV}/${GPREFIX}atmf001.ensmean.nc"
 LONB_ENKF=${LONB_ENKF:-$($NCLEN $ATMGES_ENSMEAN grid_xt)} # get LONB_ENKF
 LATB_ENKF=${LATB_ENKF:-$($NCLEN $ATMGES_ENSMEAN grid_yt)} # get LATB_ENFK
 LEVS_ENKF=${LEVS_ENKF:-$($NCLEN $ATMGES_ENSMEAN pfull)} # get LEVS_ENFK
