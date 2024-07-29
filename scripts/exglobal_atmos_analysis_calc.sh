@@ -151,9 +151,9 @@ if [ $DO_CALC_ANALYSIS == "YES" ]; then
       $NLN $ATMI09   sigi09.nc
    fi
    # link guess files
-   $NLN $ATMG03 sigf03
+   #$NLN $ATMG03 sigf03
    $NLN $ATMGES sigf06
-   $NLN $ATMG09 sigf09
+   #$NLN $ATMG09 sigf09
 
    [[ -f $ATMG04 ]] && $NLN $ATMG04 sigf04
    [[ -f $ATMG05 ]] && $NLN $ATMG05 sigf05

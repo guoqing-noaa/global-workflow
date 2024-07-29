@@ -2467,8 +2467,8 @@ class GFSTasks(Tasks):
 
             else:
                 grp = '000'
-                dep = 'f006'
-                lst = 'f006'
+                dep = 'f001'
+                lst = 'f001'
 
             return grp, dep, lst
 

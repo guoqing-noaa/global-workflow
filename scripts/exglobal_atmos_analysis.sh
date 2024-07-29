@@ -441,7 +441,7 @@ ${NLN} ${CRTM_FIX}/CloudCoeff.GFDLFV3.-109z-1.bin ./crtm_coeffs/CloudCoeff.bin
 ##############################################################
 # Observational data
 ${NLN} ${PREPQC}           prepbufr
-${NLN} ${PREPQCPF}         prepbufr_profl
+#${NLN} ${PREPQCPF}         prepbufr_profl
 ${NLN} ${SATWND}           satwndbufr
 ${NLN} ${OSCATBF}          oscatbufr
 ${NLN} ${RAPIDSCATBF}      rapidscatbufr

@@ -124,27 +124,27 @@ for imem in $(seq 1 $NMEM_ENS); do
 
    ${NLN} "${COM_ATMOS_HISTORY_MEM_PREV}/${GPREFIX_ENS}atmf00${FHR}${ENKF_SUFFIX}.nc" "./atmges_${memchar}"
    if [ $DO_CALC_INCREMENT = "YES" ]; then
-      if [ $FHR -eq 6 ]; then
+      if [ $FHR -eq 1 ]; then
          ${NLN} "${COM_ATMOS_ANALYSIS_MEM}/${APREFIX_ENS}atmanl.nc" "./atmanl_${memchar}"
       else
          ${NLN} "${COM_ATMOS_ANALYSIS_MEM}/${APREFIX_ENS}atma00${FHR}.nc" "./atmanl_${memchar}"
       fi
    fi
    mkdir -p "${COM_ATMOS_ANALYSIS_MEM}"
-   if [ $FHR -eq 6 ]; then
+   if [ $FHR -eq 1 ]; then
       ${NLN} "${COM_ATMOS_ANALYSIS_MEM}/${APREFIX_ENS}atminc.nc" "./atminc_${memchar}"
    else
       ${NLN} "${COM_ATMOS_ANALYSIS_MEM}/${APREFIX_ENS}atmi00${FHR}.nc" "./atminc_${memchar}"
    fi
    if [[ $RECENTER_ENKF = "YES" ]]; then
       if [ $DO_CALC_INCREMENT = "YES" ]; then
-         if [ $FHR -eq 6 ]; then
+         if [ $FHR -eq 1 ]; then
             ${NLN} "${COM_ATMOS_ANALYSIS_MEM}/${APREFIX_ENS}ratmanl.nc" "./ratmanl_${memchar}"
          else
             ${NLN} "${COM_ATMOS_ANALYSIS_MEM}/${APREFIX_ENS}ratma00${FHR}.nc" "./ratmanl_${memchar}"
          fi
      else
-         if [ $FHR -eq 6 ]; then
+         if [ $FHR -eq 1 ]; then
             ${NLN} "${COM_ATMOS_ANALYSIS_MEM}/${APREFIX_ENS}ratminc.nc" "./ratminc_${memchar}"
          else
             ${NLN} "${COM_ATMOS_ANALYSIS_MEM}/${APREFIX_ENS}ratmi00${FHR}.nc" "./ratminc_${memchar}"
@@ -155,7 +155,7 @@ done
 
 if [ $DO_CALC_INCREMENT = "YES" ]; then
    # Link ensemble mean analysis
-   if [ $FHR -eq 6 ]; then
+   if [ $FHR -eq 1 ]; then
       ${NLN} "${COM_ATMOS_ANALYSIS_STAT}/${APREFIX_ENS}atmanl.ensmean.nc" "./atmanl_ensmean"
    else
       ${NLN} "${COM_ATMOS_ANALYSIS_STAT}/${APREFIX_ENS}atma00${FHR}.ensmean.nc" "./atmanl_ensmean"
@@ -175,7 +175,7 @@ if [ $DO_CALC_INCREMENT = "YES" ]; then
    export err=$?; err_chk
 else
    # Link ensemble mean increment
-   if [ $FHR -eq 6 ]; then
+   if [ $FHR -eq 1 ]; then
       ${NLN} "${COM_ATMOS_ANALYSIS_STAT}/${APREFIX_ENS}atminc.ensmean.nc" "./atminc_ensmean"
    else
       ${NLN} "${COM_ATMOS_ANALYSIS_STAT}/${APREFIX_ENS}atmi00${FHR}.ensmean.nc" "./atminc_ensmean"
@@ -230,7 +230,7 @@ JCAP_ENKF=${JCAP_ENKF:--9999} # there is no jcap in these files
 if [ $RECENTER_ENKF = "YES" ]; then
 
    # GSI EnVar analysis
-   if [ $FHR -eq 6 ]; then
+   if [ $FHR -eq 1 ]; then
      ATMANL_GSI="${COM_ATMOS_ANALYSIS_DET}/${APREFIX}atmanl.nc"
      ATMANL_GSI_ENSRES="${COM_ATMOS_ANALYSIS_DET}/${APREFIX}atmanl.ensres.nc"
    else

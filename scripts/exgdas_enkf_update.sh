@@ -221,7 +221,7 @@ for imem in $(seq 1 $NMEM_ENS); do
          ${NLN} "${COM_ATMOS_HISTORY_MEM_PREV}/${GPREFIX}sfcf00${FHR}.nc" \
             "sfgsfc_${PDY}${cyc}_fhr0${FHR}_${memchar}"
       fi
-      if [ $FHR -eq 6 ]; then
+      if [ $FHR -eq 1 ]; then
          if [ $DO_CALC_INCREMENT = "YES" ]; then
             ${NLN} "${COM_ATMOS_ANALYSIS_MEM}/${APREFIX}atmanl.nc" \
                "sanl_${PDY}${cyc}_fhr0${FHR}_${memchar}"

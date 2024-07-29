@@ -34,7 +34,7 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
                     gsi_utils.make_dir(CalcAnlDir)
                 gsi_utils.copy_file(ExecAnl, CalcAnlDir + '/calc_anl.x')
                 gsi_utils.link_file(RunDir + '/siginc.nc', CalcAnlDir + '/siginc.nc.01')
-                gsi_utils.link_file(RunDir + '/sigf06', CalcAnlDir + '/ges.01')
+                gsi_utils.link_file(RunDir + '/sigf01', CalcAnlDir + '/ges.01')
                 gsi_utils.link_file(RunDir + '/siganl', CalcAnlDir + '/anl.01')
                 gsi_utils.copy_file(ExecChgresInc, CalcAnlDir + '/chgres_inc.x')
                 # for ensemble res analysis
@@ -43,58 +43,58 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
                     if not os.path.exists(CalcAnlDir):
                         gsi_utils.make_dir(CalcAnlDir)
                     gsi_utils.copy_file(ExecAnl, CalcAnlDir + '/calc_anl.x')
-                    gsi_utils.link_file(RunDir + '/siginc.nc', CalcAnlDir + '/siginc.nc.06')
-                    gsi_utils.link_file(ComOut + '/' + APrefix + 'atmanl.ensres.nc', CalcAnlDir + '/anl.ensres.06')
-                    gsi_utils.link_file(ComIn_Ges + '/' + GPrefix + 'atmf001.ensres.nc', CalcAnlDir + '/ges.ensres.06')
-                    gsi_utils.link_file(RunDir + '/sigf06', CalcAnlDir + '/ges.06')
+                    gsi_utils.link_file(RunDir + '/siginc.nc', CalcAnlDir + '/siginc.nc.01')
+                    gsi_utils.link_file(ComOut + '/' + APrefix + 'atmanl.ensres.nc', CalcAnlDir + '/anl.ensres.01')
+                    gsi_utils.link_file(ComIn_Ges + '/' + GPrefix + 'atmf001.ensres.nc', CalcAnlDir + '/ges.ensres.01')
+                    gsi_utils.link_file(RunDir + '/sigf01', CalcAnlDir + '/ges.01')
             else:
                 if os.path.isfile('sigi' + format(fh, '02') + '.nc'):
                     # for full res analysis
                     CalcAnlDir = RunDir + '/calcanl_' + format(fh, '02')
-                    CalcAnlDir6 = RunDir + '/calcanl_' + format(6, '02')
+                    CalcAnlDir1 = RunDir + '/calcanl_' + format(1, '02')
                     if not os.path.exists(CalcAnlDir):
                         gsi_utils.make_dir(CalcAnlDir)
-                    if not os.path.exists(CalcAnlDir6):
-                        gsi_utils.make_dir(CalcAnlDir6)
+                    if not os.path.exists(CalcAnlDir1):
+                        gsi_utils.make_dir(CalcAnlDir1)
                     gsi_utils.link_file(ComOut + '/' + APrefix + 'atma' + format(fh, '03') + '.nc',
-                                        CalcAnlDir6 + '/anl.' + format(fh, '02'))
+                                        CalcAnlDir1 + '/anl.' + format(fh, '02'))
                     gsi_utils.link_file(RunDir + '/siga' + format(fh, '02'),
-                                        CalcAnlDir6 + '/anl.' + format(fh, '02'))
+                                        CalcAnlDir1 + '/anl.' + format(fh, '02'))
                     gsi_utils.link_file(RunDir + '/sigi' + format(fh, '02') + '.nc',
                                         CalcAnlDir + '/siginc.nc.' + format(fh, '02'))
-                    gsi_utils.link_file(CalcAnlDir6 + '/inc.fullres.' + format(fh, '02'),
+                    gsi_utils.link_file(CalcAnlDir1 + '/inc.fullres.' + format(fh, '02'),
                                         CalcAnlDir + '/inc.fullres.' + format(fh, '02'))
                     gsi_utils.link_file(RunDir + '/sigf' + format(fh, '02'),
-                                        CalcAnlDir6 + '/ges.' + format(fh, '02'))
+                                        CalcAnlDir1 + '/ges.' + format(fh, '02'))
                     gsi_utils.link_file(RunDir + '/sigf' + format(fh, '02'),
                                         CalcAnlDir + '/ges.' + format(fh, '02'))
                     gsi_utils.copy_file(ExecChgresInc, CalcAnlDir + '/chgres_inc.x')
                     # for ensemble res analysis
                     CalcAnlDir = RunDir + '/calcanl_ensres_' + format(fh, '02')
-                    CalcAnlDir6 = RunDir + '/calcanl_ensres_' + format(6, '02')
+                    CalcAnlDir1 = RunDir + '/calcanl_ensres_' + format(1, '02')
                     if not os.path.exists(CalcAnlDir):
                         gsi_utils.make_dir(CalcAnlDir)
-                    if not os.path.exists(CalcAnlDir6):
-                        gsi_utils.make_dir(CalcAnlDir6)
+                    if not os.path.exists(CalcAnlDir1):
+                        gsi_utils.make_dir(CalcAnlDir1)
                     gsi_utils.link_file(ComOut + '/' + APrefix + 'atma' + format(fh, '03') + '.ensres.nc',
-                                        CalcAnlDir6 + '/anl.ensres.' + format(fh, '02'))
+                                        CalcAnlDir1 + '/anl.ensres.' + format(fh, '02'))
                     gsi_utils.link_file(RunDir + '/sigi' + format(fh, '02') + '.nc',
-                                        CalcAnlDir6 + '/siginc.nc.' + format(fh, '02'))
+                                        CalcAnlDir1 + '/siginc.nc.' + format(fh, '02'))
                     gsi_utils.link_file(ComIn_Ges + '/' + GPrefix + 'atmf' + format(fh, '03') + '.ensres.nc',
-                                        CalcAnlDir6 + '/ges.ensres.' + format(fh, '02'))
+                                        CalcAnlDir1 + '/ges.ensres.' + format(fh, '02'))
 
     else:
         # for full res analysis
-        CalcAnlDir = RunDir + '/calcanl_' + format(6, '02')
+        CalcAnlDir = RunDir + '/calcanl_' + format(1, '02')
         if not os.path.exists(CalcAnlDir):
             gsi_utils.make_dir(CalcAnlDir)
         gsi_utils.copy_file(ExecAnl, CalcAnlDir + '/calc_anl.x')
         gsi_utils.link_file(RunDir + '/siginc.nc', CalcAnlDir + '/siginc.nc.01')
-        gsi_utils.link_file(RunDir + '/sigf06', CalcAnlDir + '/ges.01')
+        gsi_utils.link_file(RunDir + '/sigf01', CalcAnlDir + '/ges.01')
         gsi_utils.link_file(RunDir + '/siganl', CalcAnlDir + '/anl.01')
         gsi_utils.copy_file(ExecChgresInc, CalcAnlDir + '/chgres_inc.x')
         # for ensemble res analysis
-        CalcAnlDir = RunDir + '/calcanl_ensres_' + format(6, '02')
+        CalcAnlDir = RunDir + '/calcanl_ensres_' + format(1, '02')
         if not os.path.exists(CalcAnlDir):
             gsi_utils.make_dir(CalcAnlDir)
         gsi_utils.copy_file(ExecAnl, CalcAnlDir + '/calc_anl.x')
@@ -104,7 +104,7 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
 
     # get dimension information from background and increment files
     AnlDims = gsi_utils.get_ncdims('siginc.nc')
-    GesDims = gsi_utils.get_ncdims('sigf06')
+    GesDims = gsi_utils.get_ncdims('sigf01')
 
     levs = AnlDims['lev']
     LonA = AnlDims['lon']
@@ -267,7 +267,7 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
             print('f' + format(fh, '03') + ' is in $IAUFHRS but increment file is missing. Skipping.')
 
     # generate analysis from interpolated increment
-    CalcAnlDir6 = RunDir + '/calcanl_' + format(6, '02')
+    CalcAnlDir1 = RunDir + '/calcanl_' + format(1, '02')
     # set up the namelist
     namelist = OrderedDict()
     namelist["setup"] = {"datapath": "'./'",
@@ -278,7 +278,7 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
                          "jedi": python2fortran_bool[JEDI],
                          }
 
-    gsi_utils.write_nml(namelist, CalcAnlDir6 + '/calc_analysis.nml')
+    gsi_utils.write_nml(namelist, CalcAnlDir1 + '/calc_analysis.nml')
 
     # run the executable
     if ihost >= nhosts - 1:
@@ -286,8 +286,8 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
 #   if launcher == 'srun':
 #       del os.environ['SLURM_HOSTFILE']
     print('fullres_calc_anl', namelist)
-    fullres_anl_job = subprocess.Popen(ExecCMDMPILevs_nohost + ' ' + CalcAnlDir6 + '/calc_anl.x', shell=True, cwd=CalcAnlDir6)
-    print(ExecCMDMPILevs_nohost + ' ' + CalcAnlDir6 + '/calc_anl.x submitted')
+    fullres_anl_job = subprocess.Popen(ExecCMDMPILevs_nohost + ' ' + CalcAnlDir1 + '/calc_anl.x', shell=True, cwd=CalcAnlDir1)
+    print(ExecCMDMPILevs_nohost + ' ' + CalcAnlDir1 + '/calc_anl.x submitted')
 
     sys.stdout.flush()
     exit_fullres = fullres_anl_job.wait()
@@ -302,9 +302,9 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
         chgres_jobs = []
         for fh in IAUHH:
             # first check to see if guess file exists
-            CalcAnlDir6 = RunDir + '/calcanl_ensres_06'
-            print(CalcAnlDir6 + '/ges.ensres.' + format(fh, '02'))
-            if (os.path.isfile(CalcAnlDir6 + '/ges.ensres.' + format(fh, '02'))):
+            CalcAnlDir1 = RunDir + '/calcanl_ensres_01'
+            print(CalcAnlDir1 + '/ges.ensres.' + format(fh, '02'))
+            if (os.path.isfile(CalcAnlDir1 + '/ges.ensres.' + format(fh, '02'))):
                 print('Calculating analysis on ensemble resolution for f' + format(fh, '03'))
                 # generate ensres analysis from interpolated background
                 # set up the namelist
@@ -317,14 +317,14 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
                                      "jedi": python2fortran_bool[JEDI],
                                      }
 
-                gsi_utils.write_nml(namelist, CalcAnlDir6 + '/calc_analysis.nml')
+                gsi_utils.write_nml(namelist, CalcAnlDir1 + '/calc_analysis.nml')
 
                 # run the executable
                 if ihost > nhosts - 1:
                     ihost = 0
                 print('ensres_calc_anl', namelist)
-                ensres_anl_job = subprocess.Popen(ExecCMDMPILevs_nohost + ' ' + CalcAnlDir6 + '/calc_anl.x', shell=True, cwd=CalcAnlDir6)
-                print(ExecCMDMPILevs_nohost + ' ' + CalcAnlDir6 + '/calc_anl.x submitted')
+                ensres_anl_job = subprocess.Popen(ExecCMDMPILevs_nohost + ' ' + CalcAnlDir1 + '/calc_anl.x', shell=True, cwd=CalcAnlDir1)
+                print(ExecCMDMPILevs_nohost + ' ' + CalcAnlDir1 + '/calc_anl.x submitted')
 
                 sys.stdout.flush()
                 # check on analysis steps
