@@ -798,7 +798,7 @@ cat > gsiparm.anl << EOF
   ${OBSQC}
 /
 &OBS_INPUT
-  dmesh(1)=145.0,dmesh(2)=150.0,dmesh(3)=100.0,dmesh(4)=50.0,time_window_max=3.0,
+  dmesh(1)=145.0,dmesh(2)=150.0,dmesh(3)=100.0,dmesh(4)=50.0,time_window_max=0.5,
   hofx_2m_sfcfile=${hofx_2m_sfcfile},
   ${OBSINPUT}
 /
