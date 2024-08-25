@@ -85,7 +85,7 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
 
     else:
         # for full res analysis
-        CalcAnlDir = RunDir + '/calcanl_' + format(6, '02')
+        CalcAnlDir = RunDir + '/calcanl_' + format(1, '02')
         if not os.path.exists(CalcAnlDir):
             gsi_utils.make_dir(CalcAnlDir)
         gsi_utils.copy_file(ExecAnl, CalcAnlDir + '/calc_anl.x')
@@ -94,7 +94,7 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
         gsi_utils.link_file(RunDir + '/siganl', CalcAnlDir + '/anl.01')
         gsi_utils.copy_file(ExecChgresInc, CalcAnlDir + '/chgres_inc.x')
         # for ensemble res analysis
-        CalcAnlDir = RunDir + '/calcanl_ensres_' + format(6, '02')
+        CalcAnlDir = RunDir + '/calcanl_ensres_' + format(1, '02')
         if not os.path.exists(CalcAnlDir):
             gsi_utils.make_dir(CalcAnlDir)
         gsi_utils.copy_file(ExecAnl, CalcAnlDir + '/calc_anl.x')
@@ -178,6 +178,7 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
         ExecCMDMPI10_host = 'mpiexec -l -n 10 --cpu-bind depth --depth ' + str(NThreads)
     elif launcher == 'srun':
         nodes = os.getenv('SLURM_JOB_NODELIST', '')
+        print(nodes) #gge.debug
         hosts_tmp = subprocess.check_output('scontrol show hostnames ' + nodes, shell=True)
         if (sys.version_info > (3, 0)):
             hosts_tmp = hosts_tmp.decode('utf-8')
@@ -193,6 +194,7 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
         ExecCMDMPI_host = 'srun -n ' + str(nFH) + ' --verbose --export=ALL -c 1 --distribution=arbitrary --cpu-bind=cores'
         # need to account for when fewer than LEVS tasks are available
         tasks = int(os.getenv('SLURM_NPROCS', 1))
+        print(tasks)
         if levs > tasks:
             ExecCMDMPILevs_host = 'srun -n ' + str(tasks) + ' --verbose --export=ALL -c 1 --distribution=arbitrary --cpu-bind=cores'
             ExecCMDMPILevs_nohost = 'srun -n ' + str(tasks) + ' --verbose --export=ALL'
@@ -267,13 +269,13 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
             print('f' + format(fh, '03') + ' is in $IAUFHRS but increment file is missing. Skipping.')
 
     # generate analysis from interpolated increment
-    CalcAnlDir6 = RunDir + '/calcanl_' + format(6, '02')
+    CalcAnlDir6 = RunDir + '/calcanl_' + format(1, '02')
     # set up the namelist
     namelist = OrderedDict()
     namelist["setup"] = {"datapath": "'./'",
                          "analysis_filename": "'anl'",
                          "firstguess_filename": "'ges'",
-                         "increment_filename": "'siginc.nc'",
+                         "increment_filename": "'inc.fullres'",
                          "fhr": 1,
                          "jedi": python2fortran_bool[JEDI],
                          }
@@ -283,8 +285,8 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
     # run the executable
     if ihost >= nhosts - 1:
         ihost = 0
-#   if launcher == 'srun':
-#       del os.environ['SLURM_HOSTFILE']
+    if launcher == 'srun':
+        del os.environ['SLURM_HOSTFILE']
     print('fullres_calc_anl', namelist)
     fullres_anl_job = subprocess.Popen(ExecCMDMPILevs_nohost + ' ' + CalcAnlDir6 + '/calc_anl.x', shell=True, cwd=CalcAnlDir6)
     print(ExecCMDMPILevs_nohost + ' ' + CalcAnlDir6 + '/calc_anl.x submitted')
@@ -302,7 +304,7 @@ def calcanl_gfs(DoIAU, l4DEnsVar, Write4Danl, ComOut, APrefix,
         chgres_jobs = []
         for fh in IAUHH:
             # first check to see if guess file exists
-            CalcAnlDir6 = RunDir + '/calcanl_ensres_06'
+            CalcAnlDir6 = RunDir + '/calcanl_ensres_01'
             print(CalcAnlDir6 + '/ges.ensres.' + format(fh, '02'))
             if (os.path.isfile(CalcAnlDir6 + '/ges.ensres.' + format(fh, '02'))):
                 print('Calculating analysis on ensemble resolution for f' + format(fh, '03'))
