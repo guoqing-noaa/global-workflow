@@ -4,8 +4,8 @@ BASE_CPLIC: '/mnt/lfs4/HFIP/hfv3gfs/glopara/data/ICSDIR/prototype_ICs'
 PACKAGEROOT: '/lfs4/HFIP/hfv3gfs/glopara/nwpara'
 COMINsyn: '/lfs4/HFIP/hfv3gfs/glopara/com/gfs/prod/syndat'
 HOMEDIR: '/lfs4/BMC/nrtrr/gge/ufs-ar/noscrub'
-STMP: '/lfs4/BMC/nrtrr/gge/ufs-ar/stmp'
-PTMP: '/lfs4/BMC/nrtrr/gge/ufs-ar/ptmp'
+STMP: '/lfs5/BMC/nrtrr/gge/ufs-ar/stmp'
+PTMP: '/lfs5/BMC/nrtrr/gge/ufs-ar/ptmp'
 NOSCRUB: $HOMEDIR
 ACCOUNT: rtwrfruc
 ACCOUNT_SERVICE: nrtrr
