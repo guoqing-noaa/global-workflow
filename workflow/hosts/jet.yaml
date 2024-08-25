@@ -3,7 +3,7 @@ DMPDIR: '/lfs4/BMC/nrtrr/gge/ufs-ar/dump/hourly'
 BASE_CPLIC: '/mnt/lfs4/HFIP/hfv3gfs/glopara/data/ICSDIR/prototype_ICs'
 PACKAGEROOT: '/lfs4/HFIP/hfv3gfs/glopara/nwpara'
 COMINsyn: '/lfs4/HFIP/hfv3gfs/glopara/com/gfs/prod/syndat'
-HOMEDIR: '/lfs4/BMC/nrtrr/gge/ufs-ar/noscrub'
+HOMEDIR: '/lfs5/BMC/wrfruc/gge/ufs-ar/noscrub'
 STMP: '/lfs5/BMC/wrfruc/gge/ufs-ar/stmp'
 PTMP: '/lfs5/BMC/wrfruc/gge/ufs-ar/ptmp'
 NOSCRUB: $HOMEDIR
