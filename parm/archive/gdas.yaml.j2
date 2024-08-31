@@ -47,7 +47,6 @@ gdas:
         {% else %}
         - "{{ COM_ATMOS_ANALYSIS | relpath(ROTDIR) }}/{{ head }}gsistat"
         - "{{ COM_ATMOS_ANALYSIS | relpath(ROTDIR) }}/{{ head }}cnvstat"
-        - "{{ COM_ATMOS_ANALYSIS | relpath(ROTDIR) }}/{{ head }}oznstat"
         - "{{ COM_ATMOS_ANALYSIS | relpath(ROTDIR) }}/{{ head }}radstat"
         {% endif %}
         {% if DO_VERFOZN %}
