@@ -50,7 +50,8 @@ echo "echo postmsg">"${DATA}/postmsg"; chmod 755 "${DATA}/postmsg"
 
 # Ignore spelling warning; nothing is misspelled
 # shellcheck disable=SC2153
-if [[ ${CDATE} -gt ${SDATE} ]]; then
+MOD6=$(( 10#${CDATE:8:2} % 6  ))
+if (( ${MOD6} ==0  )) && [[ ${CDATE} -gt ${SDATE} ]]; then
   for file in ${PRPI} ${sig1} ${sfc1} ${CNVS}; do
     if [[ ! -f "${file}" ]]; then
       echo "FATAL ERROR: FILE MISSING: ${file}"

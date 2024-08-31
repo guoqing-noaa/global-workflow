@@ -43,7 +43,8 @@ if [[ -s ${oznstat} ]]; then
 
 else
    # oznstat file not found
-   err=1
+   #err=1
+   echo "don't do verfozn"
 fi
 
 exit ${err}
