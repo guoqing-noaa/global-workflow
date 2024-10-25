@@ -1,5 +1,5 @@
 help([[
-Load environment to run GFS on Gaea
+Load environment to run GFS on Gaea C6
 ]])
 
 local spack_mod_path=(os.getenv("spack_mod_path") or "None")

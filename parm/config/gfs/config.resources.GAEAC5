@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# Gaea-specific job resources
+# GaeaC5-specific job resources
 
 case ${step} in
   "prep")
