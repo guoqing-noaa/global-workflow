@@ -87,7 +87,7 @@ esac
 ###temporary fix for UPP fix files
 if [[ "${MACHINE_ID}" == "gaeac6" ]] || [[ "${MACHINE_ID}" == "gaeac5" ]]; then
   cd ${HOMEgfs}/sorc/ufs_model.fd/FV3/upp
-  sorc/ufs_model.fd/FV3/upp
+  cp fix/*micro* parm/
 fi
 ##########
 # Source fix version file
