@@ -107,6 +107,13 @@ if [[ -z "${MACHINE_ID}" ]]; then
   exit 1
 fi
 
+### temporary fix for UPP
+if [[ "${MACHINE_ID}" == "gaeac6" ]] || [[ "${MACHINE_ID}" == "gaeac5" ]]; then
+  cd ufs_model.fd/FV3/upp
+  git checkout ce5f3b1
+  cd "${HOMEgfs}/sorc" || exit 1
+fi
+##########
 #------------------------------------
 # SOURCE BUILD VERSION FILES
 #------------------------------------
