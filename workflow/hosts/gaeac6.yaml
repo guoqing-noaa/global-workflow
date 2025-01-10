@@ -1,5 +1,5 @@
 BASE_GIT: '/gpfs/f6/bil-fire8/world-shared/global/glopara/git'
-DMPDIR: '/gpfs/f6/bil-fire8/world-shared/global/glopara/dump'
+DMPDIR: '/gpfs/f6/bil-fire10-oar/world-shared/gge/ufs-ar/dump/glopara'
 BASE_DATA: '/gpfs/f6/bil-fire8/world-shared/global/glopara'
 BASE_IC: '/gpfs/f6/bil-fire8/world-shared/global/glopara/data/ICSDIR'
 PACKAGEROOT: '/gpfs/f6/bil-fire8/world-shared/global/glopara/nwpara'
