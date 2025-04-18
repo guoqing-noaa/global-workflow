@@ -31,7 +31,8 @@ fix/cice
 fix/cpl
 fix/datm
 fix/gdas
-fix/gsi
+fix/gsi/*
+!fix/gsi/global_convinfo.txt
 fix/lut
 fix/mom6
 fix/orog
