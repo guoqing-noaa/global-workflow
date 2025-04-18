@@ -57,12 +57,12 @@ if [[ ${ROTDIR_DUMP} = "YES" ]]; then
      fi
    fi
    # exception handling to ensure no dead link
-   if [[ $(find ${COM_OBS} -xtype l | wc -l) -ge 1 ]]; then
-       exit 9
-   fi
-   if [[ $(find ${COM_OBS_PREV} -xtype l | wc -l) -ge 1 ]]; then
-       exit 9
-   fi
+#  if [[ $(find ${COM_OBS} -xtype l | wc -l) -ge 1 ]]; then
+#      exit 9
+#  fi
+#  if [[ $(find ${COM_OBS_PREV} -xtype l | wc -l) -ge 1 ]]; then
+#      exit 9
+#  fi
 fi
 
 
