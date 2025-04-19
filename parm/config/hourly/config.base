@@ -365,8 +365,8 @@ case "${assim_freq}" in
     export IAU_DELTHRS_ENKF=3
     ;;
   "1")
-    export IAUFHRS="1"
-    export IAUFHRS_ENKF="1"
+    export IAUFHRS="1,"
+    export IAUFHRS_ENKF="1,"
     export IAU_DELTHRS_ENKF=1
     ;;
   *)
