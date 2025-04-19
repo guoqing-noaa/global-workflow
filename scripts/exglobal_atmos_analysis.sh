@@ -31,7 +31,7 @@ GDUMP=${GDUMP:-"gdas"}
 
 # Derived base variables
 GDATE=$(${NDATE} -${assim_freq} ${CDATE})
-BDATE=$(${NDATE} -3 ${CDATE})
+BDATE=$(${NDATE} -$(( assim_freq/2+assim_freq-2*$(( assim_freq/2)) )) ${CDATE})
 PDY=$(echo ${CDATE} | cut -c1-8)
 cyc=$(echo ${CDATE} | cut -c9-10)
 bPDY=$(echo ${BDATE} | cut -c1-8)
@@ -156,17 +156,21 @@ HDOB=${HDOB:-${COMIN_OBS}/${OPREFIX}hdob.tm00.bufr_d${OSUFFIX}}
 # Guess files
 GPREFIX=${GPREFIX:-""}
 GSUFFIX=${GSUFFIX:-".nc"}
+SFCG01=${SFCG01:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf001${GSUFFIX}}
+SFCG02=${SFCG02:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf002${GSUFFIX}}
 SFCG03=${SFCG03:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf003${GSUFFIX}}
 SFCG04=${SFCG04:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf004${GSUFFIX}}
 SFCG05=${SFCG05:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf005${GSUFFIX}}
-SFCGES=${SFCGES:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf006${GSUFFIX}}
+SFCGES=${SFCGES:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf00${assim_freq}${GSUFFIX}}
 SFCG07=${SFCG07:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf007${GSUFFIX}}
 SFCG08=${SFCG08:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf008${GSUFFIX}}
 SFCG09=${SFCG09:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf009${GSUFFIX}}
+ATMG01=${ATMG01:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf001${GSUFFIX}}
+ATMG02=${ATMG02:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf002${GSUFFIX}}
 ATMG03=${ATMG03:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}atmf003${GSUFFIX}}
 ATMG04=${ATMG04:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}atmf004${GSUFFIX}}
 ATMG05=${ATMG05:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}atmf005${GSUFFIX}}
-ATMGES=${ATMGES:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}atmf006${GSUFFIX}}
+ATMGES=${ATMGES:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf00${assim_freq}${GSUFFIX}}
 ATMG07=${ATMG07:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}atmf007${GSUFFIX}}
 ATMG08=${ATMG08:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}atmf008${GSUFFIX}}
 ATMG09=${ATMG09:-${COMIN_ATMOS_HISTORY_PREV}/${GPREFIX}atmf009${GSUFFIX}}
@@ -242,8 +246,8 @@ JCAP=${JCAP:--9999} # there is no jcap in these files
 
 # Get header information from Ensemble Guess files
 if [ ${DOHYBVAR} = "YES" ]; then
-   SFCGES_ENSMEAN=${SFCGES_ENSMEAN:-${COMIN_ATMOS_HISTORY_ENS_PREV}/${GPREFIX_ENS}sfcf006.ensmean.nc}
-   export ATMGES_ENSMEAN=${ATMGES_ENSMEAN:-${COMIN_ATMOS_HISTORY_ENS_PREV}/${GPREFIX_ENS}atmf006.ensmean.nc}
+   SFCGES_ENSMEAN=${SFCGES_ENSMEAN:-${COM_ATMOS_HISTORY_ENS_PREV}/${GPREFIX_ENS}sfcf00${assim_freq}.ensmean.nc}
+   export ATMGES_ENSMEAN=${ATMGES_ENSMEAN:-${COM_ATMOS_HISTORY_ENS_PREV}/${GPREFIX_ENS}atmf00${assim_freq}.ensmean.nc}
    LONB_ENKF=${LONB_ENKF:-$(${NCLEN} ${ATMGES_ENSMEAN} grid_xt)} # get LONB_ENKF
    LATB_ENKF=${LATB_ENKF:-$(${NCLEN} ${ATMGES_ENSMEAN} grid_yt)} # get LATB_ENFK
    LEVS_ENKF=${LEVS_ENKF:-$(${NCLEN} ${ATMGES_ENSMEAN} pfull)} # get LATB_ENFK
@@ -513,39 +517,77 @@ ${NLN} ${GRADSTAT} radstat.gdas
 
 ##############################################################
 # Required model guess files
-${NLN} ${ATMG03} sigf03
-${NLN} ${ATMGES} sigf06
-${NLN} ${ATMG09} sigf09
+case "${assim_freq}" in
+  "1")
+    nhr_assimilation=1
+    min_offset=0
+    ens_nstarthr=1
+    ${NLN} ${ATMGES} sigf01
+    ${NLN} ${SFCGES} sfcf01
+    ;;
+  "2")
+    nhr_assimilation=2
+    min_offset=60
+    ens_nstarthr=1
+    ${NLN} ${ATMG01} sigf01
+    ${NLN} ${ATMGES} sigf02
+    ${NLN} ${ATMG03} sigf03
+    ${NLN} ${SFCG01} sfcf01
+    ${NLN} ${SFCGES} sfcf02
+    ${NLN} ${SFCG03} sfcf03
+    ;;
+  "3")
+    nhr_assimilation=3
+    min_offset=60
+    ens_nstarthr=2
+    ${NLN} ${ATMG01} sigf02
+    ${NLN} ${ATMGES} sigf03
+    ${NLN} ${ATMG03} sigf04
+    ${NLN} ${SFCG01} sfcf02
+    ${NLN} ${SFCGES} sfcf03
+    ${NLN} ${SFCG03} sfcf04
+    ;;
+  "6")
+    nhr_assimilation=6
+    min_offset=180
+    ${NLN} ${ATMG03} sigf03
+    ${NLN} ${ATMGES} sigf06
+    ${NLN} ${ATMG09} sigf09
 
-${NLN} ${SFCG03} sfcf03
-${NLN} ${SFCGES} sfcf06
-${NLN} ${SFCG09} sfcf09
+    ${NLN} ${SFCG03} sfcf03
+    ${NLN} ${SFCGES} sfcf06
+    ${NLN} ${SFCG09} sfcf09
 
-if [[ -f "${ATMG04}" ]]; then
-    ${NLN} "${ATMG04}" sigf04
-fi
-if [[ -f "${ATMG05}" ]]; then
-    ${NLN} "${ATMG05}" sigf05
-fi
-if [[ -f "${ATMG07}" ]]; then
-    ${NLN} "${ATMG07}" sigf07
-fi
-if [[ -f "${ATMG08}" ]]; then
-    ${NLN} "${ATMG08}" sigf08
-fi
+    if [[ -f "${ATMG04}" ]]; then
+	${NLN} "${ATMG04}" sigf04
+    fi
+    if [[ -f "${ATMG05}" ]]; then
+	${NLN} "${ATMG05}" sigf05
+    fi
+    if [[ -f "${ATMG07}" ]]; then
+	${NLN} "${ATMG07}" sigf07
+    fi
+    if [[ -f "${ATMG08}" ]]; then
+	${NLN} "${ATMG08}" sigf08
+    fi
 
-if [[ -f "${SFCG04}" ]]; then
-    ${NLN} "${SFCG04}" sfcf04
-fi
-if [[ -f "${SFCG05}" ]]; then
-    ${NLN} "${SFCG05}" sfcf05
-fi
-if [[ -f "${SFCG07}" ]]; then
-    ${NLN} "${SFCG07}" sfcf07
-fi
-if [[ -f "${SFCG08}" ]]; then
-    ${NLN} "${SFCG08}" sfcf08
-fi
+    if [[ -f "${SFCG04}" ]]; then
+	${NLN} "${SFCG04}" sfcf04
+    fi
+    if [[ -f "${SFCG05}" ]]; then
+	${NLN} "${SFCG05}" sfcf05
+    fi
+    if [[ -f "${SFCG07}" ]]; then
+	${NLN} "${SFCG07}" sfcf07
+    fi
+    if [[ -f "${SFCG08}" ]]; then
+	${NLN} "${SFCG08}" sfcf08
+    fi
+    ;;
+  *)
+    echo "not supported assim_freq: ${assim_freq}" && exit 1
+    ;;
+esac
 
 if [ "${DOHYBVAR}" == "YES" ]; then
 
@@ -557,7 +599,7 @@ if [ "${DOHYBVAR}" == "YES" ]; then
        ENKF_SUFFIX=""
    fi
 
-   fhrs="06"
+   fhrs="0${assim_freq}"
    if [ ${l4densvar} = ".true." ]; then
       fhrs="03 04 05 06 07 08 09"
       nhr_obsbin=1
@@ -732,7 +774,8 @@ cat > gsiparm.anl << EOF
   niter(1)=100,niter(2)=100,
   niter_no_qc(1)=50,niter_no_qc(2)=0,
   write_diag(1)=.true.,write_diag(2)=.false.,write_diag(3)=.true.,
-  qoption=2,
+  qoption=2,offtime_data = .true.,
+  nhr_assimilation=${nhr_assimilation}, min_offset=${min_offset}, ens_nstarthr=${ens_nstarthr},
   gencode=${IGEN:-0},deltim=${DELTIM},
   factqmin=0.5,factqmax=0.0002,
   iguess=-1,
@@ -792,7 +835,7 @@ cat > gsiparm.anl << EOF
   ${OBSQC}
 /
 &OBS_INPUT
-  dmesh(1)=145.0,dmesh(2)=150.0,dmesh(3)=100.0,dmesh(4)=50.0,time_window_max=3.0,
+  dmesh(1)=145.0,dmesh(2)=150.0,dmesh(3)=100.0,dmesh(4)=50.0,time_window_max=0.5,
   hofx_2m_sfcfile=${hofx_2m_sfcfile},
   ${OBSINPUT}
 /
