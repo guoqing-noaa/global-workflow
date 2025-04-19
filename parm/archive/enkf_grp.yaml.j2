@@ -15,8 +15,8 @@ enkf_grp:
         - "{{ COMIN_ATMOS_HISTORY_MEM | relpath(ROTDIR) }}/{{ head }}atmf{{ "%03d" % fhr }}.nc"
         {% endfor %}
 
-        # Only store the 6-hour surface forecast
-        - "{{ COMIN_ATMOS_HISTORY_MEM | relpath(ROTDIR) }}/{{ head }}sfcf006.nc"
+        # Only store the 1-hour surface forecast
+        - "{{ COMIN_ATMOS_HISTORY_MEM | relpath(ROTDIR) }}/{{ head }}sfcf001.nc"
         {% endif %}
 
         # Store the individual member analysis data
