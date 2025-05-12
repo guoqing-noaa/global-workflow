@@ -202,8 +202,8 @@ if [[ "${DO_NEST:-NO}" == "YES" ]] ; then
   export FIXorog="${FIXgfs}/orog_nest"
 else
   export ntiles=6
-  export FIXugwd="${FIXgfs}/ugwd_no_nest"
-  export FIXorog="${FIXgfs}/orog_no_nest"
+  export FIXugwd="${FIXgfs}/ugwd_nonest"
+  export FIXorog="${FIXgfs}/orog_nonest"
 fi
 
 # Set operational resolution

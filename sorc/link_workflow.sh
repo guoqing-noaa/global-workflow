@@ -71,7 +71,7 @@ ${LINK_OR_COPY} "${HOMEgfs}/versions/run.${machine}.ver" "${HOMEgfs}/versions/ru
 #------------------------------
 case "${machine}" in
 "wcoss2") FIX_DIR="/lfs/h2/emc/global/noscrub/emc.global/FIX/fix" ;;
-"hera") FIX_DIR="/scratch1/NCEPDEV/global/glopara/fix" ;;
+"hera") FIX_DIR="/scratch2/BMC/wrfruc/Guoqing.Ge/glopara/fix" ;;
 "orion") FIX_DIR="/work/noaa/global/glopara/fix" ;;
 "hercules") FIX_DIR="/work/noaa/global/glopara/fix" ;;
 "jet") FIX_DIR="/lfs5/HFIP/hfv3gfs/glopara/FIX/fix" ;;
@@ -131,7 +131,7 @@ if [[ "${LINK_NEST:-OFF}" == "ON" ]]; then
   for dir in orog \
     ugwd; do
     nestdir=${dir}_nest
-    nonestdir=${dir}_no_nest
+    nonestdir=${dir}_nonest
     if [[ -d "${nestdir}" ]]; then
       if [[ "${RUN_ENVIR}" == "nco" ]]; then
           chmod -R 755 "${nestdir}"
