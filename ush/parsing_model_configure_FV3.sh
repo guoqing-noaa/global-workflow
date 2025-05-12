@@ -63,7 +63,7 @@ local FV3ATM_OUTPUT_DIR="./"
 if [[ "${DO_NEST:-NO}" == "YES" ]] ; then
   local NEST_IMO=${npx_nest}
   local NEST_JMO=${npy_nest}
-  template="${PARMgfs}/ufs/input_global_nest.nml.IN"
+  template="${PARMgfs}/ufs/model_configure_nest.IN"
 else
   template="${PARMgfs}/ufs/model_configure.IN"
 fi
