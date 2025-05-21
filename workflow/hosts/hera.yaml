@@ -1,7 +1,7 @@
 BASE_GIT: '/scratch1/NCEPDEV/global/glopara/git'
 DMPDIR: '/scratch1/NCEPDEV/global/glopara/dump'
 BASE_DATA: '/scratch1/NCEPDEV/global/glopara/data'
-BASE_IC: '/scratch2/BMC/wrfruc/Guoqing.Ge/ufs-ar/ICS/global-nest'
+BASE_IC: '/scratch2/BMC/wrfruc/Sijie.Pan/ufs-ar/ICS/global-nest/C384'
 PACKAGEROOT: '/scratch1/NCEPDEV/global/glopara/nwpara'
 COMINsyn: '/scratch1/NCEPDEV/global/glopara/com/gfs/prod/syndat'
 HOMEDIR: '/scratch2/BMC/wrfruc/Guoqing.Ge/ufs-ar/noscrub'
