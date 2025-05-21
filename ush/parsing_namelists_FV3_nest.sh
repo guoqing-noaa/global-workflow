@@ -519,7 +519,6 @@ EOF
 EOF
   fi
   cat >> "${nml_file}" << EOF
-  do_ca      = .true.
   ca_global  = ${ca_global:-".false."}
   ca_sgs     = ${ca_sgs:-".true."}
   nca        = ${nca:-"1"}
