@@ -145,7 +145,7 @@ if [[ "${LINK_NEST:-OFF}" == "ON" ]]; then
       rm -rf "${nonestdir}"
     fi
     nest_ver="${dir}_nest_ver"
-    nonest_vir="${dir}_nonest_ver"
+    nonest_ver="${dir}_nonest_ver"
     ${LINK_OR_COPY} "${FIX_DIR}/${dir}/${!nest_ver}" "${nestdir}"
     ${LINK_OR_COPY} "${FIX_DIR}/${dir}/${!nonest_ver}" "${nonestdir}"
   done
