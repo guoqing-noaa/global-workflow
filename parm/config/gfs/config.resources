@@ -763,7 +763,7 @@ case ${step} in
     ;;
 
   "sfcanl")
-    walltime="00:20:00"
+    walltime="01:00:00"
     ntasks=${ntiles:-6}
     threads_per_task=1
     tasks_per_node=$(( max_tasks_per_node / threads_per_task ))
