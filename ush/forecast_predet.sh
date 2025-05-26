@@ -43,11 +43,20 @@ FV3_coldstarts(){
   fv3_input_files=(gfs_ctrl.nc)
   tile_files=(gfs_data sfc_data)
   local nn tt
-  for (( nn = 1; nn <= ntiles; nn++ )); do
+  for (( nn = 1; nn <= ntiles-1; nn++ )); do
     for tt in "${tile_files[@]}"; do
       fv3_input_files+=("${tt}.tile${nn}.nc")
     done
   done
+  if [[ "${DO_NEST:-NO}" == "YES" ]] ; then
+    for tt in "${tile_files[@]}"; do
+      fv3_input_files+=("${tt}.nest02.tile${ntiles}.nc")
+    done
+  else
+    for tt in "${tile_files[@]}"; do
+      fv3_input_files+=("${tt}.tile${ntiles}.nc")
+    done
+  fi
   # Create a comma separated string from array using IFS
   IFS=, echo "${fv3_input_files[*]}"
 }
@@ -62,11 +71,23 @@ FV3_restarts(){
     tile_files+=(ca_data)
   fi
   local nn tt
-  for (( nn = 1; nn <= ntiles; nn++ )); do
+  for (( nn = 1; nn <= ntiles-1; nn++ )); do
     for tt in "${tile_files[@]}"; do
       fv3_restart_files+=("${tt}.tile${nn}.nc")
     done
   done
+  if [[ "${DO_NEST:-NO}" == "YES" ]] ; then
+    for tt in "${tile_files[@]}"; do
+      if [[ "${tt}" != "ca_data" ]]; then
+        fv3_restart_files+=("${tt}.nest02.tile${ntiles}.nc")
+      fi
+    done
+    fv3_restart_files+=("fv_core.res.nest02.nc")
+  else
+    for tt in "${tile_files[@]}"; do
+      fv3_restart_files+=("${tt}.tile${ntiles}.nc")
+    done
+  fi
   # Create a comma separated string from array using IFS
   IFS=, echo "${fv3_restart_files[*]}"
 }

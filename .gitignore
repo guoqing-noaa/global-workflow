@@ -37,9 +37,11 @@ fix/lut
 fix/mom6
 fix/orog
 fix/orog_nest
+fix/orog_nonest
 fix/sfc_climo
 fix/ugwd
 fix/ugwd_nest
+fix/ugwd_nonest
 fix/verif
 fix/wave
 

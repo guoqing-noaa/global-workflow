@@ -49,8 +49,10 @@ GPREFIX="gdas.t${GDATE:8:2}z."
 OPREFIX="${RUN/enkf}.t${cyc}z."
 APREFIX="${RUN/enkf}.t${cyc}z."
 
-ntiles=6
-
+ntiles=${ntiles:-6}
+if [[ "${DO_NEST:-NO}" == "YES" && -n "${ntiles}" ]]; then
+   ntiles=$((ntiles - 1))
+fi
 
 ##############################################################
 # Get dimension information based on CASE

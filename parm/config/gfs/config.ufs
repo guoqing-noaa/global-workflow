@@ -118,6 +118,19 @@ case "${fv3_res}" in
           export layout_y_gfs=4
           export layout_x_nest=12
           export layout_y_nest=10
+          export nthreads_fv3_gdas=1
+          export nthreads_fv3_gfs=1
+          export nthreads_ufs_gdas=1
+          export nthreads_ufs_gfs=1
+          export xr_cnvcld=.false. # Do not pass conv. clouds to Xu-Randall cloud fraction
+          export cdmbgwd="0.14,1.8,1.0,1.0"  # mountain blocking, ogwd, cgwd, cgwd src scaling
+          export cdmbgwd_gsl="20.0,2.5,1.0,1.0"   # settings for GSL drag suite
+          export knob_ugwp_tauamp=3.0e-3      # setting for UGWPv1 non-stationary GWD
+          export k_split=1
+          export n_split=4
+          export tau=8.0
+          export rf_cutoff=100.0
+          export fv_sg_adj=1800
           export nest_refine=4
           export nest_ioffset=4
           export nest_joffset=9
@@ -163,6 +176,18 @@ case "${fv3_res}" in
           export layout_y_gfs=6
           export layout_x_nest=15
           export layout_y_nest=25
+          export nthreads_fv3_gdas=1
+          export nthreads_fv3_gfs=2
+          export nthreads_ufs_gdas=1
+          export nthreads_ufs_gfs=2
+          export cdmbgwd="0.23,1.5,1.0,1.0"  # mountain blocking, ogwd, cgwd, cgwd src scaling
+          export cdmbgwd_gsl="10.0,3.5,1.0,1.0"   # settings for GSL drag suite
+          export knob_ugwp_tauamp=1.5e-3      # setting for UGWPv1 non-stationary GWD
+          export k_split=2
+          export n_split=4
+          export tau=6.0
+          export rf_cutoff=100.0
+          export fv_sg_adj=1800
           export nest_refine=4
           export nest_ioffset=7
           export nest_joffset=19
@@ -209,6 +234,18 @@ case "${fv3_res}" in
           export layout_y_gfs=8
           export layout_x_nest=34
           export layout_y_nest=24
+          export nthreads_fv3_gdas=2
+          export nthreads_fv3_gfs=2
+          export nthreads_ufs_gdas=2
+          export nthreads_ufs_gfs=2
+          export cdmbgwd="1.1,0.72,1.0,1.0"  # mountain blocking, ogwd, cgwd, cgwd src scaling
+          export cdmbgwd_gsl="5.0,5.0,1.0,1.0"   # settings for GSL drag suite
+          export knob_ugwp_tauamp=0.8e-3      # setting for UGWPv1 non-stationary GWD
+          export k_split=2
+          export n_split=4
+          export tau=4.0
+          export rf_cutoff=100.0
+          export fv_sg_adj=900
           export nest_refine=4
           export nest_ioffset=13
           export nest_joffset=37
@@ -218,9 +255,9 @@ case "${fv3_res}" in
           export NEST_DLAT=0.0625
           export psl_gwd_dx_factor=2.0
           export WRITE_GROUP_GDAS=2
-          export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GDAS=20
+          export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GDAS=30
           export WRITE_GROUP_GFS=2
-          export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=20
+          export WRTTASK_PER_GROUP_PER_THREAD_PER_TILE_GFS=30
         else
           export DELTIM=300
           export layout_x_gdas=8
@@ -255,9 +292,20 @@ case "${fv3_res}" in
           export layout_y_gfs=10
           export layout_x_nest=48
           export layout_y_nest=45
-          export nthreads_fv3_nest=2
-          export nthreads_fv3_gdas=2
-          export nthreads_fv3_gfs=2
+          export nthreads_fv3_gdas=4
+          export nthreads_fv3_gfs=4
+          export nthreads_ufs_gdas=4
+          export nthreads_ufs_gfs=4
+          export cdmbgwd="4.0,0.15,1.0,1.0"  # mountain blocking, ogwd, cgwd, cgwd src scaling
+          export cdmbgwd_gsl="2.5,7.5,1.0,1.0"   # settings for GSL drag suite
+          export knob_ugwp_tauamp=0.5e-3      # setting for UGWPv1 non-stationary GWD
+          export k_split=2
+          export n_split=4
+          export tau=3.0
+          export rf_cutoff=100.0
+          export fv_sg_adj=450
+          # FIXME: Where is this variable? Do we need it?
+          # export nthreads_fv3_nest=2
           export nest_refine=4
           export nest_ioffset=24
           export nest_joffset=72
@@ -358,6 +406,7 @@ export WRTTASK_PER_GROUP_PER_THREAD_GFS
 (( ntasks_fv3_gfs = layout_x_gfs * layout_y_gfs * 6 ))
 if [[ "${DO_NEST:-NO}" == "YES" ]] ; then
   (( ntasks_fv3_gfs += layout_x_nest * layout_y_nest ))
+  (( ntasks_fv3_gdas += layout_x_nest * layout_y_nest ))
 fi
 export ntasks_fv3_gdas
 export ntasks_fv3_gfs

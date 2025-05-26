@@ -189,8 +189,12 @@ export DO_AERO_FCST="NO"
 export DO_AERO_ANL="NO"
 export DOBNDPNT_WAVE="NO"
 export DOIBP_WAV="NO" # Option to create point outputs from input boundary points
-export FRAC_GRID=".true."
-export DO_NEST="NO" # Whether to run a global-nested domain
+export FRAC_GRID=".false."
+if [[ "${ENV_JOB:-fcst}" == "fcst" ]] || [[ "${ENV_JOB:-fcst}" == "arch_tars" ]] || [[ "${ENV_JOB:-fcst}" == "stage_ic" ]]; then
+  export DO_NEST="YES"
+else
+  export DO_NEST="NO" # Whether to run a global-nested domain
+fi
 if [[ "${DO_NEST:-NO}" == "YES" ]] ; then
   export ntiles=7
   export NEST_OUTPUT_GRID="regional_latlon"
@@ -198,8 +202,8 @@ if [[ "${DO_NEST:-NO}" == "YES" ]] ; then
   export FIXorog="${FIXgfs}/orog_nest"
 else
   export ntiles=6
-  export FIXugwd="${FIXgfs}/ugwd"
-  export FIXorog="${FIXgfs}/orog"
+  export FIXugwd="${FIXgfs}/ugwd_nonest"
+  export FIXorog="${FIXgfs}/orog_nonest"
 fi
 
 # Set operational resolution

@@ -71,7 +71,7 @@ ${LINK_OR_COPY} "${HOMEgfs}/versions/run.${machine}.ver" "${HOMEgfs}/versions/ru
 #------------------------------
 case "${machine}" in
 "wcoss2") FIX_DIR="/lfs/h2/emc/global/noscrub/emc.global/FIX/fix" ;;
-"hera") FIX_DIR="/scratch1/NCEPDEV/global/glopara/fix" ;;
+"hera") FIX_DIR="/scratch2/BMC/wrfruc/Guoqing.Ge/glopara/fix" ;;
 "orion") FIX_DIR="/work/noaa/global/glopara/fix" ;;
 "hercules") FIX_DIR="/work/noaa/global/glopara/fix" ;;
 "jet") FIX_DIR="/lfs5/HFIP/hfv3gfs/glopara/FIX/fix" ;;
@@ -131,14 +131,23 @@ if [[ "${LINK_NEST:-OFF}" == "ON" ]]; then
   for dir in orog \
     ugwd; do
     nestdir=${dir}_nest
+    nonestdir=${dir}_nonest
     if [[ -d "${nestdir}" ]]; then
       if [[ "${RUN_ENVIR}" == "nco" ]]; then
           chmod -R 755 "${nestdir}"
       fi
       rm -rf "${nestdir}"
     fi
-    fix_ver="${dir}_nest_ver"
-    ${LINK_OR_COPY} "${FIX_DIR}/${dir}/${!fix_ver}" "${nestdir}"
+    if [[ -d "${nonestdir}" ]]; then
+      if [[ "${RUN_ENVIR}" == "nco" ]]; then
+          chmod -R 755 "${nonestdir}"
+      fi
+      rm -rf "${nonestdir}"
+    fi
+    nest_ver="${dir}_nest_ver"
+    nonest_ver="${dir}_nonest_ver"
+    ${LINK_OR_COPY} "${FIX_DIR}/${dir}/${!nest_ver}" "${nestdir}"
+    ${LINK_OR_COPY} "${FIX_DIR}/${dir}/${!nonest_ver}" "${nonestdir}"
   done
 fi
 

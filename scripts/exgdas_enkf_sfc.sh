@@ -28,6 +28,9 @@ DO_GSISOILDA=${DO_GSISOILDA:-"NO"}
 DOSFCANL_ENKF=${DOSFCANL_ENKF:-"YES"}
 export CASE=${CASE:-384}
 ntiles=${ntiles:-6}
+if [[ "${DO_NEST:-NO}" == "YES" && -n "${ntiles}" ]]; then
+   ntiles=$((ntiles - 1))
+fi
 
 # Utilities
 NCLEN=${NCLEN:-${USHgfs}/getncdimlen}
