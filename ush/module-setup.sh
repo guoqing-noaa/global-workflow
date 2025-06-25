@@ -72,8 +72,7 @@ elif [[ ${MACHINE_ID} = stampede* ]] ; then
 elif [[ ${MACHINE_ID} = gaea* ]] ; then
     # We are on GAEA.
     if ( ! eval module help > /dev/null 2>&1 ) ; then
-        source /usr/share/lmod/lmod/init/bash
-        source /etc/profile
+        source /opt/cray/pe/lmod/lmod/init/bash
     fi
     module reset
 
