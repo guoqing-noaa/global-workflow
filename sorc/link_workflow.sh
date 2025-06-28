@@ -71,13 +71,13 @@ ${LINK_OR_COPY} "${HOMEgfs}/versions/run.${machine}.ver" "${HOMEgfs}/versions/ru
 #------------------------------
 case "${machine}" in
 "wcoss2") FIX_DIR="/lfs/h2/emc/global/noscrub/emc.global/FIX/fix" ;;
-"hera") FIX_DIR="/scratch2/BMC/wrfruc/Guoqing.Ge/glopara/fix" ;;
+"hera") FIX_DIR="/scratch4/BMC/wrfruc/Guoqing.Ge/glopara/fix" ;;
 "orion") FIX_DIR="/work/noaa/global/glopara/fix" ;;
 "hercules") FIX_DIR="/work/noaa/global/glopara/fix" ;;
 "jet") FIX_DIR="/lfs5/HFIP/hfv3gfs/glopara/FIX/fix" ;;
 "s4") FIX_DIR="/data/prod/glopara/fix" ;;
 "gaeac5") FIX_DIR="/gpfs/f5/ufs-ard/world-shared/global/glopara/data/fix" ;;
-"gaeac6") FIX_DIR="/gpfs/f6/drsa-precip3/world-shared/role.glopara/fix" ;;
+"gaeac6") FIX_DIR="/gpfs/f6/bil-pmp/world-shared/gge/ufs-ar/fix" ;;
 "noaacloud") FIX_DIR="/contrib/global-workflow-shared-data/fix" ;;
 *)
   echo "FATAL: Unknown target machine ${machine}, couldn't set FIX_DIR"
