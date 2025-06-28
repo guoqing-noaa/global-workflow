@@ -200,6 +200,7 @@ if [[ "${DO_NEST:-NO}" == "YES" ]] ; then
   export NEST_OUTPUT_GRID="regional_latlon"
   export FIXugwd="${FIXgfs}/ugwd_nest"
   export FIXorog="${FIXgfs}/orog_nest"
+  export CCPP_SUITE="FV3_global_nest_v1"
 else
   export ntiles=6
   export FIXugwd="${FIXgfs}/ugwd_nonest"
